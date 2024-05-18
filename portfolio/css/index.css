@@ -7,6 +7,11 @@ body {
   padding: 0;
 }
 
+.resume-download-button{
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+}
 a {
   color: #3498db;
   text-decoration: none;
