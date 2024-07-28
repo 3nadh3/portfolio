@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-aExl0FzR8u3Cp1Mpd9zIFy5zPo2jBuaVZQDHL6t3o/rIgutweS3Sx2OmkkvRDKV81bPHwh6JpAAqy5odfmg0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="./js/chatbot.js"></script>
 </head>
 
 <body>
@@ -215,7 +216,45 @@
       </p>
     </div>
   </section>
+
+  <section class="chatbot">
+    <div class="chatbot-icon" id="chatbot-icon">
+      <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chatbot-container" id="chatbot-container">
+      <div class="chatbot-header">
+        Trinadh's chatbot
+        <button id="close-chatbot" class="close-chatbot">&times;</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+      </div>
+      <input type="text" id="chatbot-input" placeholder="Ask me anything about trinadh...">
+      <button id="chat-button" onclick="sendMessage()">Send</button>
+    </div>
+  </section>
+
+  
   <script>
+
+document.getElementById('chatbot-icon').addEventListener('click', () => {
+      const chatbotContainer = document.getElementById('chatbot-container');
+      chatbotContainer.classList.toggle('visible');
+    });
+
+
+    document.getElementById('close-chatbot').addEventListener('click', () => {
+      const chatbotContainer = document.getElementById('chatbot-container');
+      chatbotContainer.classList.remove('visible');
+    });
+
+
+    document.getElementById('chatbot-input').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+
   
   // JavaScript code to toggle the visibility of the "Hi There!" greeting
   document.addEventListener("DOMContentLoaded", function () {
