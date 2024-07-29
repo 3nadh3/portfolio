@@ -12,7 +12,7 @@ function sendMessage() {
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
       console.log("chatbot before connecting to backend");
       // Send message to backend
-      fetch('http://localhost:5000/chat', {
+      fetch('https://portfolio-chatbot-ozkz.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
