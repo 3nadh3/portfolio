@@ -1,3 +1,5 @@
+//require('dotenv').config();
+
 function sendMessage() {
   const input = document.getElementById('chatbot-input');
   const message = input.value;
@@ -23,7 +25,7 @@ function sendMessage() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
     console.log("chatbot before connecting to backend");
-
+    //api_route = process.env.API_ROUTE;
     // Send message to backend
     fetch('https://portfolio-chatbot-ozkz.onrender.com/chat', {
       method: 'POST',
