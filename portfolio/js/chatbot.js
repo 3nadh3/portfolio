@@ -1,4 +1,4 @@
-//require('dotenv').config();
+
 
 function sendMessage() {
   const input = document.getElementById('chatbot-input');
