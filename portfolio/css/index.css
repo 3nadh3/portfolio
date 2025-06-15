@@ -9,8 +9,9 @@ body {
 
 .resume-download-button{
         position: absolute;
-        right: 20px;
+        right: 20px;  
         cursor: pointer;
+        color:#3498db;
 }
 a {
   color: #3498db;
