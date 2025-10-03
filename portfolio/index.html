@@ -4,298 +4,354 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trinadh M - Portfolio</title>
+  <title>Trinadh Musunuri - Full Stack Developer Portfolio</title>
+  
+  <meta name="description" content="Portfolio of Trinadh Musunuri, a Full Stack Web Developer with a passion for building scalable applications and integrating AI solutions.">
+  <meta property="og:title" content="Trinadh Musunuri - Portfolio">
+  <meta property="og:description" content="Full Stack Web Developer with a passion for AI solutions.">
+  <meta property="og:image" content="https://example.com/img/social-preview.png">
+  <meta property="og:url" content="https://example.com">
+  
   <link rel="icon" type="image/svg+xml" href="./img/Resume logo.jpeg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="./css/index.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-aExl0FzR8u3Cp1Mpd9zIFy5zPo2jBuaVZQDHL6t3o/rIgutweS3Sx2OmkkvRDKV81bPHwh6JpAAqy5odfmg0g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+  
   <script src="./js/chatbot.js"></script>
-  <script src="./js//getView.js"></script>
+  <script src="./js/getView.js"></script>
 </head>
 
 <body>
-  <nav class="navbar">
-    <ul>
+  <button id="theme-toggle" title="Toggle theme">
+    <i class="fa-solid fa-lightbulb"></i>
+  </button>
+
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+      <span class="sr-only">Menu</span>
+    </button>
+    <ul id="primary-navigation" class="primary-navigation" data-visible="false">
       <li><a href="#about">About</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#training">Training</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+
   <section class="header">
-    <a href="./resume/Trinadh_Musunuri_Resume.pdf" download="Trinadh_Musunuri_Resume" title="resume download">
-      <button class="resume-download-button">
-        <i class="fas fa-download"></i>
-      </button>
-    </a>
-    <div class="background-image"></div>
-    <div class="content">
+    <div class="header-content">
       <div class="profile-image">
-        <img src="img/crp pic.png" alt="Profile Image">
+        <img src="img/crp pic.png" alt="Profile Image of Trinadh Musunuri" loading="lazy">
       </div>
       <div class="title">
-        <h1>Trinadh M</h1>
-        <p class="sub-title">Passionate MERN Developer</p>
+        <h1>Trinadh Musunuri</h1>
+        <h2 class="sub-title"><span class="typed-text"></span></h2>
       </div>
+      <a href="./resume/Trinadh_Musunuri_Resume.pdf" download="Trinadh_Musunuri_Resume" title="resume download">
+        <button class="resume-download-button">
+          Resume <i class="fas fa-download"></i>
+        </button>
+      </a>
     </div>
   </section>
-  
-  
-  
-  
+
   <section class="about" id="about">
     <div class="content">
-      <h2>Hi There!</h2>
-      <p>I'm Trinadh M, a passionate full stack Web Developer based in Eluru.</p>
-      <p>Email: trinadh.musunuri@gmail.com</p>
-      <p>Phone: +91 6305228944</p>
+      <h2>About Me</h2>
+      <p>Eager Full Stack Web Developer with a strong foundation in modern web technologies (ReactJS, Node.js) and a passion for integrating emerging Al solutions. Skilled in end-to-end development and team collaboration, with a focus on building scalable and efficient applications.</p>
     </div>
   </section>
-
-  <!-- ... Other HTML content ... -->
-
-<section class="education" id="education">
+  
+  <section class="experience" id="experience">
     <div class="content">
-      <h2>Education</h2>
-      <div class="education-blocks">
-        <div class="education-block">
-          <h3>B.Tech, Information Technology</h3>
-          <p>Sir C.R.Reddy College Of Engineering</p>
-          <p>2021 - 2025</p>
-          <p>CGPA: 7.71/10</p>
+      <h2>Experience</h2>
+      <div class="card-container">
+        <div class="card">
+          <div class="card-header">
+            <h3>Artificial Intelligence & Data Science Intern</h3>
+            <span class="card-date">Jan 2025 - Mar 2025</span>
+          </div>
+          <p class="card-subtitle">Tech-Mark Training India (Remote)</p>
+          <ul class="card-bullets">
+            <li>Completed a 3-month internship in Artificial Intelligence and Data Science, gaining practical exposure to industry applications.</li>
+            <li>Applied machine learning algorithms and data preprocessing techniques to analyze datasets and extract insights.</li>
+            <li>Strengthened skills in Python, data-driven analysis, problem-solving, and model evaluation.</li>
+          </ul>
         </div>
-        <div class="education-block">
-          <h3>Senior Secondary (XII), Science</h3>
-          <p>SRI CHAITANYA JUNIOR COLLEGE</p>
-          <p>ANDHRA PRADESH BOARD OF INTERMEDIATE EDUCATION</p>
-          <p>Year of completion: 2020</p>
-          <p>Percentage: 82.80%</p>
-        </div>
-        <div class="education-block">
-          <h3>Secondary (X)</h3>
-          <p>DR.K.K.R's Gowtham</p>
-          <p>AP SSC board</p>
-          <p>Year of completion: 2018</p>
-          <p>CGPA: 9.50/10</p>
+        <div class="card">
+          <div class="card-header">
+            <h3>Full Stack Developer Intern</h3>
+            <span class="card-date">May 2024 - Aug 2024</span>
+          </div>
+          <p class="card-subtitle">Talent Shine</p>
+          <ul class="card-bullets">
+            <li>Completed a Full Stack Java internship, gaining experience in building end-to-end applications.</li>
+            <li>Worked on both front-end and back-end development ensuring seamless functionality.</li>
+            <li>Optimized the database with normalization and faster query accessing by using indexing.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- ... Other HTML content ... -->
-  
-  <section class="trainings" id="training">
+
+  <section class="projects" id="projects">
     <div class="content">
-      <h2>Trainings</h2>
-      <div class="training-blocks">
-        <div class="training-block" data-link="training1">
-          <h3>Top performer (Web Development Training)</h3>
-          <p>Verified and added by Internshala Trainings</p>
-          <p><strong>Web Development</strong></p>
-          <p>Internshala Trainings, Online</p>
-          <p>May 2023 - Jun 2023</p>
-          <p>Successfully completed an 8-week online certified training on Web Development. The training consisted of HTML,
-            CSS, Bootstrap, DBMS, PHP, JS, React, and Final Project modules. I scored 100% in the final assessment and was a
-            top performer in the training.</p>
+      <h2>Projects</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>M-Sum-PAI: Performance-Aware Multimodal Summarization Al</h3>
+          <p>Designed an Al system to summarize text, audio, video, and PDFs using Gemini 2.5 Flash and AssemblyAl, delivering clean, structured summaries in paragraph and bullet formats.</p>
+          <p><strong>Tech Stack:</strong> React.js, Node.js, Express, Python, Gemini API.</p>
+          <div class="project-links">
+            <a href="https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend.git" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://transcripto-ai.netlify.app/" target="_blank" class="project-link live-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          </div>
         </div>
-
-        <!-- Add more training blocks here -->
-        <div class="training-block" data-link="training1">
-          <h3>AWS Cloud Technical Essentials</h3>
-          <p>authorized by Amazon Web Services</p>
-          <p><strong>Amazon Web Services</strong></p>
-          <p>Coursera, Online</p>
-          <p>March 2024</p>
-          <p>Successfully completed an 4-week online certified training on AWS Cloud Technical Essentials. The training consisted of 
-            IAM user,groups,S3,EC2, lamda,virtual machines,Understand AWS database and storage offerings, including Amazon Relational Database Service (Amazon RDS), Amazon DynamoDB </p>
+        <div class="card">
+          <h3>StudentRequestHub</h3>
+          <p>Developed an E-permission web app for students to submit and manage various requests online, improving communication flow.</p>
+          <p><strong>Tech Stack:</strong> HTML, CSS, PHP, MySQL.</p>
+          <div class="project-links">
+            <a href="#" target="https://github.com/3nadh3/StudentRequestHub.git" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+          </div>
         </div>
-
-        <!-- Add more training blocks here -->
       </div>
     </div>
   </section>
- <section class="projects" id="projects">
-  <div class="content">
-    <h2>Projects</h2>
-    <div class="project-blocks">
-      
-      <div class="project-block" data-link="project1">
-        <h3>Transcripto AI</h3>
-        <p>
-          An AI-powered web app that converts PDFs, text, and videos into transcripts, summaries, and bullet points.
-        </p>
-        <div class="project-link">
-          <a href="https://transcripto-ai.netlify.app/" target="_blank">
-            <button>To view</button>
-          </a>
-        </div>
-      </div>
 
-      <div class="project-block" data-link="project2">
-        <h3>LST Bill Generator</h3>
-        <p>A web page for printing the Bill</p>
-        <div class="project-link">
-          <a href="http://lst-inovice.free.nf/" target="_blank"><button>To view</button></a>
-        </div>
-      </div>
-
-      <div class="project-block" data-link="project3">
-        <h3>Students Request Hub</h3>
-        <p>An online students project that allows students to submit permission requests.</p>
-        <div class="project-link">
-          <a href="https://github.com/3nadh3/permission-online-students-project" target="_blank"><button>To view</button></a>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</section>
-
-  
   <section class="skills" id="skills">
     <div class="content">
-      <h2>Skills</h2>
-      <div class="development-wrapper">
-        <ul class="skills-bar-container">
-          <li>
-            <div class="skill-info">
-              <span class="skill-name">HTML</span>
-              <span class="skill-level">Advanced</span>
-            </div>
-            <div class="progressbar" style="width: 90%;"></div>
-          </li>
-          <li>
-            <div class="skill-info">
-              <span class="skill-name">CSS</span>
-              <span class="skill-level">Intermediate</span>
-            </div>
-            <div class="progressbar" style="width: 80%;"></div>
-          </li>
-          <li>
-            <div class="skill-info">
-              <span class="skill-name">JavaScript</span>
-              <span class="skill-level">Intermediate</span>
-            </div>
-            <div class="progressbar" style="width: 70%;"></div>
-          </li>
-          <li>
-            <div class="skill-info">
-              <span class="skill-name">AWS</span>
-              <span class="skill-level">Intermediate</span>
-            </div>
-            <div class="progressbar" style="width: 70%;"></div>
-          </li>
-            <!-- Add more skills here -->
-          
-        </ul>
-      </div>
-      <div class="linkedin-link">
-        <a href="https://www.linkedin.com/in/musunuri-trinadh" target="_blank">View Certificates on LinkedIn</a>
+      <h2>Technical Skills</h2>
+      <div class="skills-container">
+        <div class="skill-tag"><i class="devicon-html5-plain colored"></i> HTML</div>
+        <div class="skill-tag"><i class="devicon-css3-plain colored"></i> CSS</div>
+        <div class="skill-tag"><i class="devicon-javascript-plain colored"></i> JavaScript</div>
+        <div class="skill-tag"><i class="devicon-react-original colored"></i> React JS</div>
+        <div class="skill-tag"><i class="devicon-nodejs-plain colored"></i> Node.js</div>
+        <div class="skill-tag"><i class="devicon-php-plain colored"></i> PHP</div>
+        <div class="skill-tag"><i class="devicon-python-plain colored"></i> Python</div>
+        <div class="skill-tag"><i class="devicon-java-plain-wordmark colored"></i> Java</div>
+        <div class="skill-tag"><i class="devicon-c-plain colored"></i> C</div>
+        <div class="skill-tag"><i class="devicon-bootstrap-plain colored"></i> Bootstrap 5</div>
+        <div class="skill-tag"><i class="devicon-mysql-plain-wordmark colored"></i> MySQL</div>
+        <div class="skill-tag"><i class="devicon-mongodb-plain-wordmark colored"></i> MongoDB</div>
+        <div class="skill-tag"><i class="devicon-amazonwebservices-original-wordmark colored"></i> AWS</div>
+        <div class="skill-tag"><i class="devicon-git-plain colored"></i> Git</div>
+        <div class="skill-tag"><i class="fas fa-server"></i> Render</div>
+        <div class="skill-tag"><i class="devicon-figma-plain colored"></i> Figma</div>
+        <div class="skill-tag"><i class="fas fa-cloud"></i> Netlify</div>
+        <div class="skill-tag"><i class="fas fa-code-branch"></i> RESTful APIs</div>
+        <div class="skill-tag"><img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman logo"> Postman</div>
       </div>
     </div>
   </section>
   
-  
-  
-  
-  
-  <section class="contact" id="contact">
+  <section class="certifications" id="certifications">
     <div class="content">
-      <h1>Contact Me</h1>
-      <p class="infotext">Feel free to reach out to me for any inquiries or opportunities.</p>
-      <hr>
-      <p class="infotext" id="infosize">
-        <a href="mailto:trinadh.musunuri@gmail.com?Subject=Portfolio%20Inquiry" target="_top">
-          Email: <i class="far fa-envelope" id="icon" aria-hidden="true"></i> trinadh.musunuri@gmail.com
-        </a>
-        <br>
-        <a href="tel:+916305228944">
-          Phone: <i class="fas fa-phone" id="icon" aria-hidden="true"></i> +91 6305228944
-        </a>
-        <br>
-        <a href="https://github.com/3nadh3" target="_blank">
-          GitHub: <i class="fab fa-github" id="icon" aria-hidden="true"></i>3nadh3
-        </a>
-        <br>
-        <a href="https://www.linkedin.com/in/musunuri-trinadh/" target="_blank">
-          LinkedIn: <i class="fab fa-linkedin" id="icon" aria-hidden="true"></i>musunuri-trinadh
-        </a>
-      </p>
+      <h2>Certifications & Activities</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Generative Al by Google Cloud</h3>
+          <p class="card-subtitle">Issued Nov 2024</p>
+          <p>Leveraged Vertex Al to deploy scalable machine learning models, reducing Al workflow time by 30%.</p>
+        </div>
+        <div class="card">
+          <h3>AWS Cloud Technical Essentials</h3>
+          <p class="card-subtitle">Issued Nov 2023</p>
+          <p>Designed efficient cloud solutions using EC2, S3, and RDS, enhancing application reliability by 20%.</p>
+        </div>
+        <div class="card">
+          <h3>Hackathon Participant</h3>
+          <p class="card-subtitle">Seshadri Rao Gudlavalleru Engineering College - Nov 2023</p>
+          <p>Participated in a 24-hour hackathon with 250 members, showcasing problem-solving and teamwork skills.</p>
+        </div>
+        <div class="card">
+          <h3>1st Place - Department Project Expo</h3>
+          <p class="card-subtitle">2022</p>
+          <p>Won 1st place, demonstrating innovative project development and presentation skills.</p>
+        </div>
+         <div class="card">
+          <h3>1st Place - Coding Competition</h3>
+          <p class="card-subtitle">2022</p>
+          <p>Secured 1st place, showcasing problem-solving abilities and proficiency in programming.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="chatbot">
+  <section class="education" id="education">
+    <div class="content">
+      <h2>Education</h2>
+      <div class="education-container">
+        <div class="education-card">
+          <img src="./img/Central-Michigan-University-seal.png" alt="Central Michigan University" class="education-image">
+          <div class="education-details">
+            <h3>Master of Science in Computer Science</h3>
+            <a href="https://www.cmich.edu/" target="_blank" rel="noopener noreferrer" class="education-school">Central Michigan University</a>
+            <p class="education-date">Expected Graduation: May 2027</p>
+          </div>
+        </div>
+        <div class="education-card">
+          <img src="./img/C.R.R" alt="Sir C R Reddy College Of Engineering" class="education-image">
+          <div class="education-details">
+            <h3>B.Tech in Information Technology</h3>
+            <a href="https://www.sircrrengg.ac.in/" target="_blank" rel="noopener noreferrer" class="education-school">Sir C R Reddy College Of Engineering</a>
+            <p class="education-date">Graduated: May 2025 - CGPA: 7.71/10</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="content">
+      <h2>Get In Touch</h2>
+      <p>I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
+      <div class="social-links">
+        <a href="mailto:trinadh.musunuri@gmail.com" target="_blank" title="Email" aria-label="Send an Email to Trinadh Musunuri"><i class="fas fa-envelope"></i></a>
+        <a href="https://github.com/3nadh3" target="_blank" title="GitHub" aria-label="View Trinadh Musunuri's GitHub Profile"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/trinadh-musunuri/" target="_blank" title="LinkedIn" aria-label="View Trinadh Musunuri's LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+        <a href="tel:+19899331795" title="Phone" aria-label="Call Trinadh Musunuri"><i class="fas fa-phone"></i></a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="counter-container">
+     <p>👀 Page Views: <span id="viewCount">0</span></p>
+    </div>
+  </footer>
+
+  <div class="chatbot">
     <div class="chatbot-icon" id="chatbot-icon">
       <i class="fas fa-comment-dots"></i>
     </div>
     <div class="chatbot-container" id="chatbot-container">
       <div class="chatbot-header">
-        Trinadh's chatbot
+        Trinadh's Assistant
         <button id="close-chatbot" class="close-chatbot">&times;</button>
       </div>
       <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chatbot-message bot-message" id="typing-indicator" style="display: none;">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
       </div>
-      <input type="text" id="chatbot-input" placeholder="Ask me anything about trinadh...">
-      <button id="chat-button" onclick="sendMessage()">Send</button>
+      <div class="chatbot-input-area">
+        <input type="text" id="chatbot-input" placeholder="Ask me anything...">
+        <button id="chat-button" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <div class="counter-container">
-    <h1>👀 Views: <span id="viewCount">0</span></h1>
-</div>
   <script>
-
-document.getElementById('chatbot-icon').addEventListener('click', () => {
-      const chatbotContainer = document.getElementById('chatbot-container');
-      chatbotContainer.classList.toggle('visible');
+    const themeToggle = document.getElementById('theme-toggle');
+    const lightModeIcon = '<i class="fa-solid fa-lightbulb"></i>';
+    const darkModeIcon = '<i class="fa-regular fa-lightbulb"></i>';
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeToggle.innerHTML = darkModeIcon;
+    } else {
+      themeToggle.innerHTML = lightModeIcon;
+    }
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      themeToggle.innerHTML = isDarkMode ? darkModeIcon : lightModeIcon;
+      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     });
 
-
-    document.getElementById('close-chatbot').addEventListener('click', () => {
-      const chatbotContainer = document.getElementById('chatbot-container');
-      chatbotContainer.classList.remove('visible');
-    });
-
-
-    document.getElementById('chatbot-input').addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    sendMessage();
-  }
-});
-
-
-  
-  // JavaScript code to toggle the visibility of the "Hi There!" greeting
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the "About" section and the "Hi There!" greeting
-    const aboutSection = document.querySelector(".about");
-    const greeting = document.querySelector(".about h2");
-
-    // Calculate the position of the "About" section relative to the viewport
-    function checkGreetingVisibility() {
-      const rect = aboutSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Show the greeting if the "About" section is at least 25% visible in the viewport
-      if (rect.top < windowHeight * 0.75) {
-        greeting.classList.add("aboutTitleVisible");
-      } else {
-        greeting.classList.remove("aboutTitleVisible");
-      }
+    function animateCountUp(element) {
+        const target = parseInt(element.dataset.finalCount || element.textContent, 10);
+        if (isNaN(target)) return;
+        let current = 0;
+        const duration = 2000, stepTime = 20;
+        const totalSteps = duration / stepTime;
+        const increment = target / totalSteps;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                clearInterval(timer);
+                element.textContent = target;
+            } else { element.textContent = Math.ceil(current); }
+        }, stepTime);
     }
 
-    // Check the greeting visibility on page load
-    checkGreetingVisibility();
-
-    // Check the greeting visibility on scroll
-    window.addEventListener("scroll", checkGreetingVisibility);
-  });
-</script>
-
-
-  
-
+    document.addEventListener("DOMContentLoaded", function () {
+      const primaryNav = document.querySelector('.primary-navigation');
+      const navToggle = document.querySelector('.mobile-nav-toggle');
+      navToggle.addEventListener('click', () => {
+        const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+        primaryNav.setAttribute('data-visible', !isVisible);
+        navToggle.setAttribute('aria-expanded', !isVisible);
+      });
+      
+      const animatedElements = document.querySelectorAll(".about h2, .card, .skill-tag, .counter-container, .education-card");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            if (entry.target.classList.contains('counter-container')) {
+              const viewCountSpan = entry.target.querySelector('#viewCount');
+              if (viewCountSpan) {
+                const countObserver = new MutationObserver(() => {
+                    const finalCount = parseInt(viewCountSpan.textContent, 10);
+                    if (!isNaN(finalCount) && finalCount > 0) {
+                        viewCountSpan.dataset.finalCount = finalCount;
+                        animateCountUp(viewCountSpan);
+                        countObserver.disconnect();
+                    }
+                });
+                countObserver.observe(viewCountSpan, { childList: true });
+              }
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      animatedElements.forEach(el => observer.observe(el));
+      
+      const typedTextSpan = document.querySelector(".typed-text");
+      const textArray = ["Full Stack Developer", "AI Enthusiast", "Creative Problem-Solver", "Lifelong Learner"];
+      const typingDelay = 100, erasingDelay = 50, newTextDelay = 2000;
+      let textArrayIndex = 0, charIndex = 0;
+      function type() {
+        if (charIndex < textArray[textArrayIndex].length) {
+          typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex++);
+          setTimeout(type, typingDelay);
+        } else { setTimeout(erase, newTextDelay); }
+      }
+      function erase() {
+        if (charIndex > 0) {
+          typedTextSpan.textContent = textArray[textArrayIndex].substring(0, --charIndex);
+          setTimeout(erase, erasingDelay);
+        } else {
+          textArrayIndex = (textArrayIndex + 1) % textArray.length;
+          setTimeout(type, typingDelay + 500);
+        }
+      }
+      if (textArray.length) setTimeout(type, newTextDelay / 2);
+    });
+    
+    document.getElementById('chatbot-icon').addEventListener('click', () => {
+      document.getElementById('chatbot-container').classList.toggle('visible');
+    });
+    document.getElementById('close-chatbot').addEventListener('click', () => {
+      document.getElementById('chatbot-container').classList.remove('visible');
+    });
+    document.getElementById('chatbot-input').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') { sendMessage(); }
+    });
+  </script>
 </body>
-
 </html>
