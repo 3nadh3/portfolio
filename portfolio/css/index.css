@@ -97,6 +97,7 @@ section { padding: 100px 20px; }
 .education-card { display: flex; flex-direction: column; gap: 20px; background-color: var(--secondary-accent); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px var(--shadow-color); transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
 .education-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px var(--shadow-color); }
 .education-image { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.education-details { text-align: left; }
 .education-details h3 { font-size: 1.5rem; margin-bottom: 5px; color: var(--text-heading); }
 .education-school { font-size: 1.1rem; font-weight: bold; color: var(--primary-accent); text-decoration: none; transition: text-decoration 0.3s ease; }
 .education-school:hover { text-decoration: underline; }
@@ -118,7 +119,6 @@ footer { background-color: var(--footer-bg); padding: 20px; text-align: center; 
 /* --- Chatbot Styles --- */
 @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
 .chatbot-icon { position: fixed; bottom: 25px; right: 25px; background-color: var(--primary-accent); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; z-index: 1001; animation: pulse 2s infinite; }
-/* (Other chatbot styles are unchanged and correct) */
 .chatbot-container { position: fixed; bottom: 100px; right: 25px; width: 320px; height: 450px; border: 1px solid var(--border-color); border-radius: 15px; background-color: var(--bg-color); box-shadow: 0 10px 30px var(--shadow-color); overflow: hidden; display: none; flex-direction: column; transform: scale(0.5); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; z-index: 1000; }
 .chatbot-container.visible { display: flex; transform: scale(1); opacity: 1; }
 .chatbot-header { padding: 15px; background-color: var(--secondary-accent); color: var(--text-heading); font-family: var(--font-heading); display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease, color 0.3s ease; }
@@ -138,19 +138,21 @@ footer { background-color: var(--footer-bg); padding: 20px; text-align: center; 
 /* --- 📱 Media Queries for Responsiveness 📱 --- */
 @media screen and (max-width: 768px) {
   /*
-  * THE FIX: This section is corrected.
-  * The .navbar element is no longer hidden. Its visual styles are reset,
-  * allowing the .mobile-nav-toggle inside it to be visible and functional.
+  * FINAL FIX FOR MOBILE NAVIGATION:
+  * This section makes the mobile menu visible and functional.
+  * The desktop bar's visual styles are reset, but the container remains
+  * so the menu toggle inside it can be displayed.
   */
   .navbar {
     background: transparent;
     backdrop-filter: none;
-    border: none;
+    border-bottom: none;
     padding: 0;
+    justify-content: flex-start; /* Align items to the start */
   }
 
   .primary-navigation {
-    display: flex; /* This is required for the panel to be a flex container */
+    display: flex;
     position: fixed;
     z-index: 1000;
     inset: 0 0 0 30%;
@@ -162,9 +164,15 @@ footer { background-color: var(--footer-bg); padding: 20px; text-align: center; 
     transform: translateX(100%);
     transition: transform 350ms ease-out;
   }
+  
+  /* Hide desktop links when mobile nav is not active */
+  .navbar ul {
+    display: none;
+  }
 
   .primary-navigation[data-visible="true"] {
     transform: translateX(0%);
+    display: flex; /* Ensure it's visible when active */
   }
   
   .mobile-nav-toggle {
@@ -204,4 +212,13 @@ footer { background-color: var(--footer-bg); padding: 20px; text-align: center; 
   .title .sub-title { font-size: 1.2rem; min-height: 1.8rem; }
   .card-container { grid-template-columns: 1fr; }
   .card-header { flex-direction: column; align-items: flex-start; }
+}
+
+@media screen and (max-width: 499px) {
+  .education-card {
+    align-items: center;
+  }
+  .education-details {
+    text-align: center;
+  }
 }
