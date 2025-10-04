@@ -25,6 +25,9 @@
   
   <script src="./js/chatbot.js"></script>
   <script src="./js/getView.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
 </head>
 
 <body>
@@ -48,6 +51,7 @@
   </nav>
 
   <section class="header">
+    <div id="particles-js"></div>
     <div class="header-content">
       <div class="profile-image">
         <img src="img/crp pic.png" alt="Profile Image of Trinadh Musunuri" loading="lazy">
@@ -377,6 +381,41 @@
     document.getElementById('chatbot-input').addEventListener('keydown', (event) => {
       if (event.key === 'Enter') { sendMessage(); }
     });
+
+   function updateParticlesTheme(isDark) {
+  window.pJSDom[0].pJS.particles.color.value = isDark ? "#3b82f6" : "#1e293b";
+  window.pJSDom[0].pJS.particles.line_linked.color = isDark ? "#3b82f6" : "#64748b";
+  window.pJSDom[0].pJS.fn.particlesRefresh();
+}
+
+particlesJS('particles-js',
+  {
+    "particles": {
+      "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+      "color": { "value": "#3b82f6" },  /* 🔹 matches your accent */
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 3, "random": true },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#3b82f6",  /* 🔹 accent lines */
+        "opacity": 0.3,
+        "width": 1
+      },
+      "move": { "enable": true, "speed": 2 }
+    },
+    "interactivity": {
+      "events": {
+        "onhover": { "enable": true, "mode": "repulse" },
+        "onclick": { "enable": true, "mode": "push" }
+      },
+      "modes": { "repulse": { "distance": 150 }, "push": { "particles_nb": 3 } }
+    },
+    "retina_detect": true
+  }
+);
+
   </script>
 </body>
 </html>
