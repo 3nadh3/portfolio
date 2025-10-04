@@ -116,23 +116,25 @@ section { padding: 100px 20px; }
 }
 
 /* ✅ Uniform logo container */
+/* ✅ Uniform logo container */
 .education-logo {
-  width: 100px;   /* increased size from 80px */
-  height: 100px;
+  width: 120px;   /* slightly bigger than before */
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   flex-shrink: 0;
   overflow: hidden;
-  /* removed background: #fff */
+  /* background removed so no white box */
 }
 
 .education-logo img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* keeps original aspect ratio */
+  object-fit: contain; /* preserves full logo */
 }
+
 
 
 .education-details {
