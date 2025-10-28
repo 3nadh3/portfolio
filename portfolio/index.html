@@ -6,6 +6,7 @@
   <title>Trinadh Musunuri | Full Stack Developer & AI Engineer</title>
 
   <!-- ✅ SEO Description -->
+   <meta name="Trinadh Musunuri Portfolio " content="Trinadh Musunuri Portfolio">
   <meta
     name="description"
     content="Hi, I'm Trinadh Musunuri — a Full Stack Web Developer and AI Engineer passionate about building scalable web applications, AI-integrated solutions, and cloud-powered platforms."
@@ -20,6 +21,10 @@
   <!-- ✅ Robots and Canonical -->
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://trinadh.dev/" />
+ 
+  <meta name="author" content="Trinadh Musunuri">
+<meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
+
 
   <!-- ✅ Favicon -->
   <link
@@ -46,7 +51,7 @@
   <meta property="og:image:height" content="800" />
 
   <!-- ✅ Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
+  <!-- <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Trinadh Musunuri | Full Stack Developer & AI Engineer" />
   <meta
     name="twitter:description"
@@ -54,7 +59,9 @@
   />
   <meta name="twitter:image" content="https://trinadh.dev/img/favino.png" />
 
+-->
   <!-- ✅ Structured Data (Rich Snippet for Google) -->
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -469,34 +476,73 @@
   window.pJSDom[0].pJS.fn.particlesRefresh();
 }
 
-particlesJS('particles-js',
-  {
-    "particles": {
-      "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
-      "color": { "value": "#3b82f6" },  /* 🔹 matches your accent */
-      "shape": { "type": "circle" },
-      "opacity": { "value": 0.5 },
-      "size": { "value": 3, "random": true },
-      "line_linked": {
-        "enable": true,
-        "distance": 150,
-        "color": "#3b82f6",  /* 🔹 accent lines */
-        "opacity": 0.3,
-        "width": 1
-      },
-      "move": { "enable": true, "speed": 2 }
-    },
-    "interactivity": {
-      "events": {
-        "onhover": { "enable": true, "mode": "repulse" },
-        "onclick": { "enable": true, "mode": "push" }
-      },
-      "modes": { "repulse": { "distance": 150 }, "push": { "particles_nb": 3 } }
-    },
-    "retina_detect": true
-  }
-);
-
   </script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ✅ Function to load particles.js after it's available
+  const loadParticles = () => {
+    if (typeof particlesJS === "undefined") {
+      setTimeout(loadParticles, 100);
+      return;
+    }
+
+    const isDarkMode = document.body.classList.contains("dark-mode");
+
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 90, density: { enable: true, value_area: 800 } },
+        color: { value: isDarkMode ? "#3b82f6" : "#1e3a8a" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: isDarkMode ? "#3b82f6" : "#1e3a8a",
+          opacity: 0.3,
+          width: 1
+        },
+        move: { enable: true, speed: 4 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" }
+        },
+        modes: { repulse: { distance: 150 }, push: { particles_nb: 3 } }
+      },
+      retina_detect: true
+    });
+  };
+
+  // ✅ Initialize particles
+  loadParticles();
+
+  // ✅ Update particles when theme changes
+  const updateParticlesTheme = () => {
+    const container = document.getElementById("particles-js");
+    if (!container) return;
+    container.innerHTML = ""; // clear existing canvas
+    loadParticles();
+  };
+
+  // ✅ Observe theme changes
+  const observer = new MutationObserver(updateParticlesTheme);
+  observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+  // ✅ Also trigger when you toggle theme manually
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", updateParticlesTheme);
+  }
+
+});
+</script>
+
+
+  
 </body>
 </html>
