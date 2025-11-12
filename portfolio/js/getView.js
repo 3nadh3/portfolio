@@ -1,83 +1,81 @@
 const fetchVisitorCount = async () => {
+    const viewCountElement = document.getElementById("viewCount");
+    if (!viewCountElement) return;
+
     try {
-        console.log("Checking if the user is a new visitor...");
-
+        const now = Date.now();
         const lastVisit = localStorage.getItem("lastVisit");
-        const lastCount = localStorage.getItem("visitorCount"); // Get stored count
-        const now = new Date().getTime();
-        const viewCountElement = document.getElementById('viewCount');
+        const lastCount = localStorage.getItem("visitorCount");
 
-        // If count exists in localStorage, display it immediately
-        if (lastCount !== null) {
-            console.log("Displaying stored count:", lastCount);
-            viewCountElement.innerText = lastCount;
-        } else {
-            console.log("No stored count found, setting to 0...");
-            viewCountElement.innerText = "0"; // Set to 0 instead of "Loading..."
-        }
+        // ✅ Show temporary placeholder instead of wrong old count
+        viewCountElement.innerText = lastCount ? lastCount : "Loading...";
 
-        if (!lastVisit || now - lastVisit > 10 * 60 * 1000) { // 10 minutes in milliseconds
-            console.log("User is a new visitor (or 10 minutes passed), updating count...");
+        const shouldFetch =
+            !lastVisit || now - parseInt(lastVisit) > 10 * 60 * 1000; // 10 min
 
-            // Fetch updated count from API
-            const response = await fetch('https://portfolio-chatbot-ozkz.onrender.com/visitor');
+        if (shouldFetch) {
+            console.log("Fetching updated visitor count...");
+
+            const response = await fetch("https://portfolio-chatbot-ozkz.onrender.com/visitor", {
+                cache: "no-store",
+            });
             const data = await response.json();
 
-            console.log("API Response:", data);
+            if (data?.count !== undefined) {
+                const newCount = data.count;
 
-            if (data.count !== undefined) {
-                console.log("Updating UI with new count:", data.count);
+                // ✅ Smoothly animate only if there’s a difference
+                if (!lastCount || parseInt(lastCount) !== newCount) {
+                    animateCount(
+                        viewCountElement,
+                        parseInt(lastCount || 0),
+                        newCount
+                    );
+                }
 
-                // Store new count & visit timestamp
-                localStorage.setItem("visitorCount", data.count);
+                // ✅ Update cache
+                localStorage.setItem("visitorCount", newCount);
                 localStorage.setItem("lastVisit", now);
-
-                // Animate the counter when it becomes visible
-                animateCount(viewCountElement, parseInt(viewCountElement.innerText), data.count);
             } else {
-                console.error("Error: API did not return a valid count");
+                console.error("API did not return a valid count:", data);
             }
         } else {
-            console.log("User visited within the last 10 minutes. Not updating count.");
+            console.log("Recent visitor, using cached value:", lastCount);
         }
     } catch (error) {
         console.error("Error fetching visitor count:", error);
     }
 };
 
-// Function to animate the count
+// ✅ Smooth counter animation
 const animateCount = (element, start, end) => {
-    let duration = 2000; // 2 seconds
+    const duration = 1500; // 1.5 seconds
     let startTime = null;
 
     const step = (timestamp) => {
         if (!startTime) startTime = timestamp;
-        let progress = Math.min((timestamp - startTime) / duration, 1);
+        const progress = Math.min((timestamp - startTime) / duration, 1);
         element.innerText = Math.floor(progress * (end - start) + start);
-
-        if (progress < 1) {
-            requestAnimationFrame(step);
-        }
+        if (progress < 1) requestAnimationFrame(step);
     };
 
     requestAnimationFrame(step);
 };
 
-// Observer to trigger fetch when section is visible
+// ✅ Observe when counter section appears on screen
 const counterObserver = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                console.log("Counter section is visible, updating count...");
                 fetchVisitorCount();
-                counterObserver.unobserve(entry.target); // Stop observing after updating
+                counterObserver.unobserve(entry.target); // only once
             }
         });
     },
-    { threshold: 0.5 } // Trigger when 50% of the section is visible
+    { threshold: 0.5 }
 );
 
-// Run when the page loads
+// ✅ Initialize when page loads
 window.onload = () => {
     const counterSection = document.querySelector(".counter-container");
     if (counterSection) {
