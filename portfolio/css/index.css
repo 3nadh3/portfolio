@@ -312,3 +312,78 @@ footer { background-color: var(--footer-bg); padding: 20px; text-align: center; 
     text-align: center;
   }
 }
+
+/* ================================
+   📌 CERTIFICATIONS SECTION STYLING
+   ================================ */
+
+.certifications .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin-top: 2rem;
+}
+
+/* Card UI */
+.certifications .card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.8rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.certifications .card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Header - Title + Icon */
+.cert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.cert-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.4;
+  flex: 1;
+}
+
+/* Small Stylish Icon */
+.cert-icon {
+  color: #60a5fa;
+  font-size: 0.95rem;
+  padding: 6px 7px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.cert-icon:hover {
+  background: rgba(59, 130, 246, 0.35);
+  transform: scale(1.15);
+}
+
+/* Subtitle */
+.certifications .card-subtitle {
+  color: #cbd5e1;
+  margin: 0.5rem 0 0.7rem;
+  font-size: 0.88rem;
+  opacity: 0.85;
+}
+
+/* Paragraph */
+.certifications .card p {
+  color: #e2e8f0;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
