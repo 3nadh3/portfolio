@@ -1,73 +1,87 @@
-const fetchVisitorCount = async () => {
-    try {
-        console.log("Checking visitor status...");
+const BACKEND_URL = "https://portfolio-chatbot-ozkz.onrender.com/visitor";
+const MIN_COUNT = 1500;
 
-        const lastVisit = localStorage.getItem("lastVisit");
-        const storedCount = parseInt(localStorage.getItem("visitorCount")) || 0;
-        const now = Date.now();
-        const viewCountElement = document.getElementById('viewCount');
+let backendCountGlobal = null; // store fetched count
 
-        // Show stored value immediately
-        viewCountElement.innerText = storedCount;
+// 🔥 wake backend immediately when site opens
+async function wakeBackendOnLoad() {
+    console.log("Waking backend in background...");
 
-        // Only fetch if 10 min passed
-        if (!lastVisit || now - lastVisit > 10 * 60 * 1000) {
-            console.log("Fetching updated count...");
+    let success = false;
 
-            const response = await fetch('https://portfolio-chatbot-ozkz.onrender.com/visitor');
-            const data = await response.json();
+    while (!success) {
+        try {
+            const res = await fetch(BACKEND_URL);
+            const data = await res.json();
 
             if (data && data.count !== undefined) {
-                const newCount = parseInt(data.count);
-
-                // ✅ Only update if API value is higher
-                if (newCount > storedCount) {
-                    console.log(`Updating from ${storedCount} → ${newCount}`);
-                    animateCount(viewCountElement, storedCount, newCount);
-                    localStorage.setItem("visitorCount", newCount);
-                    localStorage.setItem("lastVisit", now);
-                } else {
-                    console.log(`Keeping stored count ${storedCount}, API returned ${newCount}`);
-                }
+                backendCountGlobal = parseInt(data.count);
+                success = true;
+                console.log("Backend awake. Count:", backendCountGlobal);
             } else {
-                console.error("Invalid API response");
+                throw new Error("Invalid response");
             }
-        } else {
-            console.log("Visited recently — using cached count.");
+
+        } catch (err) {
+            console.log("Backend sleeping... retrying in 4s");
+            await new Promise(r => setTimeout(r, 4000));
         }
-    } catch (err) {
-        console.error("Error fetching visitor count:", err);
     }
-};
+}
 
-// Animation (unchanged)
-const animateCount = (element, start, end) => {
-    let duration = 2000;
+// 🎯 show count when footer visible
+function showVisitorCount() {
+    const el = document.getElementById("viewCount");
+    if (!el) return;
+
+    if (backendCountGlobal === null) {
+        el.innerText = "1500+";
+        return;
+    }
+
+    let finalCount = backendCountGlobal;
+    if (finalCount < MIN_COUNT) finalCount = MIN_COUNT;
+
+    animateCount(el, MIN_COUNT, finalCount);
+}
+
+// smooth animation
+function animateCount(el, start, end) {
     let startTime = null;
+    const duration = 1800;
 
-    const step = (timestamp) => {
+    function step(timestamp) {
         if (!startTime) startTime = timestamp;
-        let progress = Math.min((timestamp - startTime) / duration, 1);
-        element.innerText = Math.floor(progress * (end - start) + start);
-        if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-};
 
-// Observer
-const counterObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+
+        el.innerText = value + "+";
+
+        if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+
+// run when page opens
+document.addEventListener("DOMContentLoaded", () => {
+
+    // 🔥 wake backend immediately
+    wakeBackendOnLoad();
+
+    // 👀 show count when footer visible
+    const section = document.querySelector(".counter-container");
+    if (!section) return;
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                fetchVisitorCount();
-                counterObserver.unobserve(entry.target);
+                showVisitorCount();
+                observer.unobserve(section);
             }
         });
-    },
-    { threshold: 0.5 }
-);
+    }, { threshold: 0.3 });
 
-window.onload = () => {
-    const counterSection = document.querySelector(".counter-container");
-    if (counterSection) counterObserver.observe(counterSection);
-};
+    observer.observe(section);
+});

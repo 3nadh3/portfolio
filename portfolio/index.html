@@ -437,21 +437,7 @@ into production-ready services</p>
       localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     });
 
-    function animateCountUp(element) {
-        const target = parseInt(element.dataset.finalCount || element.textContent, 10);
-        if (isNaN(target)) return;
-        let current = 0;
-        const duration = 2000, stepTime = 20;
-        const totalSteps = duration / stepTime;
-        const increment = target / totalSteps;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                clearInterval(timer);
-                element.textContent = target;
-            } else { element.textContent = Math.ceil(current); }
-        }, stepTime);
-    }
+   
 
     document.addEventListener("DOMContentLoaded", function () {
       const primaryNav = document.querySelector('.primary-navigation');
@@ -467,20 +453,6 @@ into production-ready services</p>
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            if (entry.target.classList.contains('counter-container')) {
-              const viewCountSpan = entry.target.querySelector('#viewCount');
-              if (viewCountSpan) {
-                const countObserver = new MutationObserver(() => {
-                    const finalCount = parseInt(viewCountSpan.textContent, 10);
-                    if (!isNaN(finalCount) && finalCount > 0) {
-                        viewCountSpan.dataset.finalCount = finalCount;
-                        animateCountUp(viewCountSpan);
-                        countObserver.disconnect();
-                    }
-                });
-                countObserver.observe(viewCountSpan, { childList: true });
-              }
-            }
             observer.unobserve(entry.target);
           }
         });
