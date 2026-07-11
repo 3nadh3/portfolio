@@ -278,26 +278,39 @@ section { padding: var(--section-pad) 20px; }
 }
 .project-link.github-link:hover { background-color: var(--border-color); transform: translateY(-2px); }
 
-/* --- Skills (grouped) --- */
+/* --- Skills (tabbed categories) --- */
 .skills { background-color: var(--secondary-accent); transition: background-color 0.3s ease; }
-.skills-group { max-width: 900px; margin: 0 auto 34px; }
-.skills-group:last-child { margin-bottom: 0; }
-.skills-group-title {
-  font-family: var(--font-heading);
-  font-size: 0.82rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px;
-  color: var(--primary-accent);
-  text-align: center; margin-bottom: 16px;
-  display: flex; align-items: center; gap: 14px; justify-content: center;
+.skills-tabs {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px; max-width: 900px; margin: 0 auto 36px;
 }
-.skills-group-title::before,
-.skills-group-title::after {
-  content: ''; height: 1px; width: clamp(24px, 8vw, 70px);
-  background: var(--border-color);
+.skills-tab {
+  font-family: var(--font-heading);
+  font-size: 0.9rem; font-weight: 600;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--skill-tag-bg);
+  color: var(--text-secondary);
+  cursor: pointer; white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease,
+              border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.skills-tab:hover { color: var(--primary-accent); border-color: var(--primary-accent); transform: translateY(-2px); }
+.skills-tab.active {
+  background: linear-gradient(135deg, var(--primary-accent), var(--primary-accent-darker));
+  color: #fff; border-color: transparent;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+.skills-panel { display: none; }
+.skills-panel.active { display: block; animation: panelFade 0.35s ease; }
+@keyframes panelFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .skills-container {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 12px; max-width: 900px; margin: 0 auto;
+  min-height: 120px; align-content: flex-start;
 }
 .skill-tag {
   background-color: var(--skill-tag-bg);
@@ -470,6 +483,7 @@ footer {
 .chatbot-input-area { display: flex; border-top: 1px solid var(--border-color); }
 #chatbot-input {
   flex: 1; border: none; padding: 15px; min-width: 0;
+  font-size: 16px; /* ≥16px prevents iOS Safari auto-zoom on focus */
   background-color: var(--secondary-accent); color: var(--text-primary); outline: none;
 }
 #chat-button {
@@ -552,8 +566,39 @@ footer {
   .education-details { text-align: center; }
   .social-links a { width: 54px; height: 54px; font-size: 1.4rem; }
   .chatbot-icon { width: 52px; height: 52px; font-size: 1.5rem; bottom: 18px; right: 18px; }
-  .chatbot-container { bottom: 84px; right: 15px; }
+
+  /* Skills tabs: single scrollable row instead of wrapping */
+  .skills-tabs {
+    flex-wrap: nowrap; justify-content: flex-start;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding: 4px 4px 10px; scrollbar-width: thin;
+    mask-image: linear-gradient(90deg, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+  }
+  .skills-tab { flex-shrink: 0; }
+
+  /* Chatbot goes full-screen so the input sits directly above the keyboard.
+     100dvh tracks the dynamic viewport; JS (visualViewport) refines it on iOS. */
+  .chatbot-container {
+    inset: auto 0 0 0;
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
+    z-index: 1002;
+  }
+  .chatbot:has(.chatbot-container.visible) .chatbot-icon {
+    opacity: 0; pointer-events: none;
+  }
+  /* Larger touch targets in full-screen mode */
+  .chatbot-header { padding: 18px 16px; }
+  .close-chatbot { font-size: 30px; padding: 0 6px; }
+  #chat-button { padding: 0 24px; }
 }
+
+/* Lock page scroll behind the full-screen chat */
+body.chat-open { overflow: hidden; }
 
 /* Small phones */
 @media screen and (max-width: 380px) {
