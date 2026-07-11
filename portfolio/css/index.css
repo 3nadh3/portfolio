@@ -469,7 +469,24 @@ footer {
 .chatbot-message {
   padding: 8px 12px; margin: 5px; border-radius: 10px;
   max-width: 80%; word-wrap: break-word; line-height: 1.4;
+  animation: msgIn 0.25s ease;
 }
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.chatbot-message.loading {
+  display: inline-flex; align-items: center;
+  padding: 12px 14px; min-width: 52px;
+}
+.typing-note {
+  flex-basis: 100%;
+  font-size: 0.78rem; font-style: italic;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  animation: msgIn 0.25s ease;
+}
+.chatbot-message.loading { flex-wrap: wrap; }
 .chatbot-message.user-message { background-color: var(--primary-accent); color: #fff; margin-left: auto; border-bottom-right-radius: 2px; }
 .chatbot-message.bot-message { background-color: var(--secondary-accent); color: var(--text-primary); margin-right: auto; border-bottom-left-radius: 2px; }
 @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
@@ -492,6 +509,8 @@ footer {
   transition: background-color 0.3s ease;
 }
 #chat-button:hover { background-color: var(--primary-accent-darker); }
+#chat-button:disabled { opacity: 0.55; cursor: wait; }
+#chatbot-input:disabled { opacity: 0.7; }
 
 /* ============================================================
    📱 Responsive
