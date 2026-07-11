@@ -567,15 +567,9 @@ footer {
   .social-links a { width: 54px; height: 54px; font-size: 1.4rem; }
   .chatbot-icon { width: 52px; height: 52px; font-size: 1.5rem; bottom: 18px; right: 18px; }
 
-  /* Skills tabs: single scrollable row instead of wrapping */
-  .skills-tabs {
-    flex-wrap: nowrap; justify-content: flex-start;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
-    padding: 4px 4px 10px; scrollbar-width: thin;
-    mask-image: linear-gradient(90deg, #000 92%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
-  }
-  .skills-tab { flex-shrink: 0; }
+  /* Skills tabs: compact pills wrapping into two rows — all 5 categories visible, no scrolling */
+  .skills-tabs { gap: 8px; margin-bottom: 28px; }
+  .skills-tab { padding: 8px 15px; font-size: 0.82rem; }
 
   /* Chatbot goes full-screen so the input sits directly above the keyboard.
      100dvh tracks the dynamic viewport; JS (visualViewport) refines it on iOS. */
@@ -591,14 +585,28 @@ footer {
   .chatbot:has(.chatbot-container.visible) .chatbot-icon {
     opacity: 0; pointer-events: none;
   }
-  /* Larger touch targets in full-screen mode */
-  .chatbot-header { padding: 18px 16px; }
-  .close-chatbot { font-size: 30px; padding: 0 6px; }
+  /* Full-screen chat header: clear the iPhone notch/status bar, make the ✕ an obvious button */
+  .chatbot-header {
+    padding: calc(14px + env(safe-area-inset-top)) 16px 14px;
+    font-size: 1.05rem;
+  }
+  .close-chatbot {
+    font-size: 24px; line-height: 1;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--skill-tag-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    display: grid; place-items: center;
+  }
+  .chatbot-input-area { padding-bottom: env(safe-area-inset-bottom); }
   #chat-button { padding: 0 24px; }
 }
 
-/* Lock page scroll behind the full-screen chat */
+/* Lock page scroll behind the full-screen chat, and hide the floating
+   theme/nav toggles so they can't overlap the chat's close button */
 body.chat-open { overflow: hidden; }
+body.chat-open #theme-toggle,
+body.chat-open .mobile-nav-toggle { display: none; }
 
 /* Small phones */
 @media screen and (max-width: 380px) {
