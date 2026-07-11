@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
   <title>Trinadh Musunuri | Full Stack Developer & AI Engineer</title>
 
   <!-- ✅ SEO Description -->
@@ -160,7 +160,7 @@
         </p>
 
         <ul class="card-bullets">
-          <li>Engineered a multi-agent AI platform using React and IBM watsonx Orchestrate, integrating Slack delivery with structured interactive widgets for enterprise workflows and deployed on AWS cloud.</li>
+          <li>Engineered a multi-agent AI platform using React and IBM watsonx Orchestrate, integrating Slack delivery with structured interactive widgets for enterprise workflows.</li>
           <li>Built transaction-centric Grafana and Loki dashboards for distributed voice workflows, enabling end-to-end tracing across AI Gateway, STT, TTS, and downstream services — reducing root-cause analysis time by approximately 80% during internal investigations.</li>
           <li>Implemented structured logging and contextual metadata propagation (transaction ID, request type, provider, latency metrics) in AI Gateway, improving request correlation and operational visibility across services.</li>
           <li>Introduced service-level failure drill-down and STT lifecycle event classification, simplifying debugging across multi-service AI voice workflows.</li>
@@ -251,8 +251,15 @@
     <div class="content">
       <h2>Technical Skills</h2>
 
-      <div class="skills-group">
-        <p class="skills-group-title">Languages</p>
+      <div class="skills-tabs" role="tablist" aria-label="Skill categories">
+        <button class="skills-tab active" role="tab" aria-selected="true" data-target="languages">Languages</button>
+        <button class="skills-tab" role="tab" aria-selected="false" data-target="web">Web &amp; APIs</button>
+        <button class="skills-tab" role="tab" aria-selected="false" data-target="ai">AI &amp; ML</button>
+        <button class="skills-tab" role="tab" aria-selected="false" data-target="cloud">Cloud &amp; DevOps</button>
+        <button class="skills-tab" role="tab" aria-selected="false" data-target="db">Databases &amp; Tools</button>
+      </div>
+
+      <div class="skills-panel active" id="skills-languages" role="tabpanel">
         <div class="skills-container">
           <div class="skill-tag"><i class="devicon-python-plain colored"></i> Python</div>
           <div class="skill-tag"><i class="devicon-java-plain-wordmark colored"></i> Java</div>
@@ -262,8 +269,7 @@
         </div>
       </div>
 
-      <div class="skills-group">
-        <p class="skills-group-title">Web &amp; APIs</p>
+      <div class="skills-panel" id="skills-web" role="tabpanel">
         <div class="skills-container">
           <div class="skill-tag"><i class="devicon-react-original colored"></i> React JS</div>
           <div class="skill-tag"><i class="devicon-nodejs-plain colored"></i> Node.js</div>
@@ -276,8 +282,7 @@
         </div>
       </div>
 
-      <div class="skills-group">
-        <p class="skills-group-title">AI &amp; Machine Learning</p>
+      <div class="skills-panel" id="skills-ai" role="tabpanel">
         <div class="skills-container">
           <div class="skill-tag"><i class="devicon-pytorch-original colored"></i> PyTorch</div>
           <div class="skill-tag"><i class="fas fa-robot"></i> IBM watsonx</div>
@@ -287,8 +292,7 @@
         </div>
       </div>
 
-      <div class="skills-group">
-        <p class="skills-group-title">Cloud, DevOps &amp; Observability</p>
+      <div class="skills-panel" id="skills-cloud" role="tabpanel">
         <div class="skills-container">
           <div class="skill-tag"><i class="devicon-amazonwebservices-plain-wordmark colored"></i> AWS</div>
           <div class="skill-tag"><i class="devicon-googlecloud-plain colored"></i> Google Cloud</div>
@@ -304,8 +308,7 @@
         </div>
       </div>
 
-      <div class="skills-group">
-        <p class="skills-group-title">Databases &amp; Tools</p>
+      <div class="skills-panel" id="skills-db" role="tabpanel">
         <div class="skills-container">
           <div class="skill-tag"><i class="devicon-mongodb-plain-wordmark colored"></i> MongoDB</div>
           <div class="skill-tag"><i class="devicon-mysql-plain-wordmark colored"></i> MySQL</div>
@@ -531,6 +534,24 @@
       }, { threshold: 0.1 });
       animatedElements.forEach(el => observer.observe(el));
 
+      // Skills category tabs
+      const skillTabs = document.querySelectorAll('.skills-tab');
+      const skillPanels = document.querySelectorAll('.skills-panel');
+      skillTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          skillTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+          skillPanels.forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          const panel = document.getElementById('skills-' + tab.dataset.target);
+          if (panel) {
+            panel.classList.add('active');
+            // tags in previously hidden panels were never intersected — reveal them now
+            panel.querySelectorAll('.skill-tag').forEach(el => el.classList.add('visible'));
+          }
+        });
+      });
+
       const typedTextSpan = document.querySelector(".typed-text");
       const textArray = ["Software Engineer @ IBM", "Full Stack Developer", "AI Enthusiast", "Creative Problem-Solver", "Lifelong Learner"];
       const typingDelay = 100, erasingDelay = 50, newTextDelay = 2000;
@@ -553,14 +574,44 @@
       if (textArray.length) setTimeout(type, newTextDelay / 2);
     });
 
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const isMobileChat = () => window.matchMedia('(max-width: 600px)').matches;
+
     document.getElementById('chatbot-icon').addEventListener('click', () => {
-      document.getElementById('chatbot-container').classList.toggle('visible');
+      chatbotContainer.classList.toggle('visible');
+      // lock page scroll while full-screen chat is open on phones
+      document.body.classList.toggle('chat-open', isMobileChat() && chatbotContainer.classList.contains('visible'));
     });
     document.getElementById('close-chatbot').addEventListener('click', () => {
-      document.getElementById('chatbot-container').classList.remove('visible');
+      chatbotContainer.classList.remove('visible');
+      document.body.classList.remove('chat-open');
+      chatbotInput.blur();
     });
-    document.getElementById('chatbot-input').addEventListener('keydown', (event) => {
+    chatbotInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') { sendMessage(); }
+    });
+
+    // 📱 Keep the chat input visible above the on-screen keyboard.
+    // iOS Safari overlays the keyboard instead of resizing the layout,
+    // so we shrink the chat to the *visual* viewport while typing.
+    if (window.visualViewport) {
+      const fitChatToViewport = () => {
+        if (isMobileChat() && chatbotContainer.classList.contains('visible')) {
+          chatbotContainer.style.height = window.visualViewport.height + 'px';
+          chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        } else {
+          chatbotContainer.style.height = '';
+        }
+      };
+      window.visualViewport.addEventListener('resize', fitChatToViewport);
+    }
+    chatbotInput.addEventListener('focus', () => {
+      setTimeout(() => {
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        chatbotInput.scrollIntoView({ block: 'nearest' });
+      }, 300);
     });
   </script>
 
