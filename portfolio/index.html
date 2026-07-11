@@ -83,8 +83,13 @@
     rel="stylesheet"
   />
 
-  <!-- ✅ Styles -->
-  <link rel="stylesheet" href="./css/index.css" />
+  <!-- ✅ Styles (bump ?v= whenever this file changes to bust browser/CDN caches) -->
+  <link rel="stylesheet" href="./css/index.css?v=2" />
+  <!-- Critical tab mechanics: keeps skills tabs functional even if index.css is cached/stale -->
+  <style>
+    .skills-panel { display: none; }
+    .skills-panel.active { display: block; }
+  </style>
 
   <!-- ✅ Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
