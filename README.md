@@ -31,12 +31,9 @@ The opening screen is a portfolio entrance, not account authentication. Sound st
 
 ## Run locally
 
-```sh
-cd portfolio
-python3 -m http.server 8080
-```
+This portfolio is built with **HTML, CSS, and JavaScript**. No framework, build step, or Python runtime is required.
 
-Open http://localhost:8080. Deploy `portfolio/` as the static site root. No build step or environment variables are required.
+Open `portfolio/index.html` in your browser, or use the VS Code **Live Server** extension to preview the `portfolio/` folder. Deploy `portfolio/` as the static site root.
 
 ## Update content
 
