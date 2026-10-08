@@ -3,6 +3,7 @@ import {useRef,useState,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Volume2,VolumeX} from 'lucide-react';
 import {getIntroAudio} from '../lib/introAudio';
+import {getSoundMuted,saveSoundMuted} from '../lib/soundPreference';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -15,11 +16,12 @@ export default function Landing() {
   const [revealed,setRevealed] = useState(false);
   const [exiting,setExiting] = useState(false);
   const [entering,setEntering] = useState(false);
-  const [muted,setMuted] = useState(false);
+  const [muted,setMuted] = useState(getSoundMuted);
   const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(()=>{
     sound.current=getIntroAudio();
+    sound.current.muted=getSoundMuted();
     const revealTimer=setTimeout(()=>setRevealed(true),reducedMotion()?0:1000);
     return ()=>{
       clearTimeout(revealTimer);
@@ -53,6 +55,7 @@ export default function Landing() {
   };
   const toggleSound = () => {
     const next=!muted;
+    saveSoundMuted(next);
     setMuted(next);
     if(sound.current)sound.current.muted=next;
   };
