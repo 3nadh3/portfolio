@@ -59,7 +59,9 @@ The sound and default video are hosted locally. Developer, Stalker, and Adventur
 - [SkillSwap](https://skill-swap.netlify.app/)
 - [M-Sum-PAI](https://transcripto-ai.netlify.app/) · [Source](https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend)
 
-The chatbot retains the existing backend at `https://portfolio-chatbot-ozkz.onrender.com/chat` and its `{ input }` / `{ message }` API contract. Includes suggested questions, pending-state protection, and timeout/error handling.
+The chatbot uses `https://portfolio-chatbot-ozkz.onrender.com/chat`. Each request sends `{ input, history }`, with completed `{ role, content }` user/assistant messages; the response remains `{ message }`. Recent conversation history stays in session storage for this browser tab across profile changes and reloads. **New chat** clears it. Only successful exchanges reach the LLM; greetings, pending indicators, and error messages are excluded. Context is bounded to 12 recent turns and 24,000 characters.
+
+The matching [Node.js backend](https://github.com/3nadh3/portfolio-chatbot/tree/master) validates history, maps assistant messages to Gemini model messages, and supplies its own resume-based system instructions. Conversation state is request-local rather than shared between visitors.
 
 ## Validation
 
