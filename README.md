@@ -34,6 +34,8 @@ npm run preview
 
 `npm run build` checks TypeScript and builds the static site into `portfolio/`. The built output is committed for compatibility with the existing static hosting setup. After changing source files, rebuild and commit the updated `portfolio/` output.
 
+Netlify build settings are committed in `netlify.toml`: base **repository root (`.`)**, build command **`npm run build`**, and publish directory **`portfolio`**. The `portfolio/` folder contains built assets; it is not the npm project directory.
+
 For existing static hosting, publish **`portfolio/`**. For a host that builds from source, run **`npm run build`** and publish **`portfolio/`**. The root `index.html` is the Vite development entry, not the built page.
 
 ## Content and assets
