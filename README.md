@@ -1,57 +1,66 @@
 # Trinadh Musunuri — Netflix-Inspired Portfolio
 
-My personal portfolio featuring my software engineering experience at IBM, CMU research, projects, technical skills, and M.S. Computer Science education (expected May 2027).
+A personalized React portfolio based on [shamihsnn/netflix-portfolio](https://github.com/shamihsnn/netflix-portfolio), featuring my IBM experience, CMU research, projects, live demos, credentials, and education.
 
-## Portfolio versions
+## Credits
 
-| Branch | Design |
+Kudos and thanks to **[shamihsnn / Usama Hassan](https://github.com/shamihsnn)** for the original Netflix-inspired portfolio. This version adopts the upstream React/Vite/Tailwind foundation, Netflix Sans typography, opening sound, profile selection, cinematic backgrounds, and content-row/card pattern. Adapted components identify the source in their comments. The upstream README declares MIT licensing.
+
+Reference revision: `6f691190bebcbcae9a16ec7bcf092201ff5eb71f`. Personal content and chatbot integration belong to Trinadh Musunuri. This repository remains independent rather than a GitHub fork. Not affiliated with Netflix.
+
+## Versions
+
+| Branch | Version |
 | --- | --- |
-| [`master`](https://github.com/3nadh3/portfolio/tree/master) | Current Netflix-inspired portfolio, personalized with my resume and content. |
-| [`original-personal-design`](https://github.com/3nadh3/portfolio/tree/original-personal-design) | My original portfolio design, designed and developed by me, preserved before the redesign. |
+| [`master`](https://github.com/3nadh3/portfolio/tree/master) | Current React/Vite/Tailwind adaptation. |
+| [`original-personal-design`](https://github.com/3nadh3/portfolio/tree/original-personal-design) | My original HTML/CSS/JavaScript portfolio, designed and developed by me. |
+| [`static-netflix-design-backup`](https://github.com/3nadh3/portfolio/tree/static-netflix-design-backup) | Preserved static Netflix-inspired version before the React upgrade. |
 
-The original design branch preserves the previous website code at commit `bbd56769ca3c6985c5a32392c1eb5db761fc16c8`, with a README identifying the archived version.
+## Stack
 
-## Credits and kudos
+React 18, TypeScript, Vite, Tailwind CSS, React Router, and Lucide icons. Python is not required. Hash-based routes work on static hosting without server rewrite rules. Vite gives JavaScript and CSS content-based filenames to prevent stale versions after deployment.
 
-Kudos and thanks to **[shamihsnn / Usama Hassan](https://github.com/shamihsnn)** for **[netflix-portfolio](https://github.com/shamihsnn/netflix-portfolio)**, the original design reference for this version. The opening flow, role-based profile selection, typography, sound, avatars, and cinematic background videos are adapted from that project. My original repository remains independent rather than a GitHub fork; this README records the upstream inspiration and asset attribution.
+## Run and build
 
-The reference assets are loaded from commit `6f691190bebcbcae9a16ec7bcf092201ff5eb71f`: the `tudum.mp3` opening sound, four profile avatars, and corresponding background videos. Typography uses the reference's Netflix Sans regular, medium, and bold font URLs with Helvetica/Arial fallbacks. Media requires access to `raw.githubusercontent.com`; fonts require access to `assets.nflxext.com`. This portfolio is not affiliated with Netflix.
+```sh
+npm install
+npm run dev
+```
 
-## Features
+```sh
+npm run build
+npm run preview
+```
 
-- Full-screen name intro with click-to-enter sound and a playback-synchronized zoom/fade transition (about 4.1 seconds).
-- Recruiter, Developer, Stalker, and Adventurer profile selection.
-- Profile-specific background videos and top-picks heading.
-- Resume-based experience, skills, education, and projects.
-- Project filters and accessible detail dialogs.
-- Resume download, LinkedIn, GitHub, and email links.
-- Responsive layouts, keyboard controls, and reduced-motion handling.
+`npm run build` checks TypeScript and builds the static site into `portfolio/`. The built output is committed for compatibility with the existing static hosting setup. After changing source files, rebuild and commit the updated `portfolio/` output.
 
-The opening screen is a portfolio entrance, not account authentication. Sound starts only after clicking Enter. Intro sound can be muted before entering; background videos start muted and have a sound toggle. Returning visitors skip the intro within the same tab session.
+For existing static hosting, publish **`portfolio/`**. For a host that builds from source, run **`npm run build`** and publish **`portfolio/`**. The root `index.html` is the Vite development entry, not the built page.
 
-## Run locally
+## Content and assets
 
-This portfolio is built with **HTML, CSS, and JavaScript**. No framework, build step, or Python runtime is required.
+- `src/pages/`: intro, profile selection, and personalized profile page.
+- `src/components/`: reusable content rows, project dialog, and chatbot.
+- `src/lib/content.json`: project descriptions, stacks, live links, skills, and profile content.
+- `src/index.css`: upstream Tailwind styling plus personalized components.
+- `public/`: original favicon, resume, intro sound, avatars, and default background.
 
-Open `portfolio/index.html` in your browser, or use the VS Code **Live Server** extension to preview the `portfolio/` folder. Deploy `portfolio/` as the static site root.
+The sound and default video are hosted locally. Developer, Stalker, and Adventurer videos use pinned upstream URLs; fonts use the upstream Netflix Sans font URLs. Those external resources need network access. The opening sound begins after user interaction. Videos start muted and have a sound toggle.
 
-## Update content
+## Profiles
 
-- `portfolio/index.html`: experience, education, contact details, opening screens.
-- `portfolio/js/portfolio.js`: project/skill data, profiles, media, and interaction logic.
-- `portfolio/css/index.css`: layout, reference fonts, and responsive styling.
-- `portfolio/resume/Trinadh_Musunuri_Resume.pdf`: downloadable resume; matches the provided resume.
+- **Recruiter:** production impact, experience, skills, education, credentials, and selected projects.
+- **Developer:** implementations, stacks, working demos, and available source links.
+- **Stalker:** professional journey, education, credentials, and contact.
+- **Adventurer:** adversarial ML, hardware benchmarking, and explainable AI.
+
+## Live demos
+
+- [CyberGuard XAI](https://cyberguard-xai.netlify.app/)
+- [SkillSwap](https://skill-swap.netlify.app/)
+- [M-Sum-PAI](https://transcripto-ai.netlify.app/) · [Source](https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend)
+
+The chatbot retains the existing backend at `https://portfolio-chatbot-ozkz.onrender.com/chat` and its `{ input }` / `{ message }` API contract. Includes suggested questions, pending-state protection, and timeout/error handling.
 
 ## Validation
 
-JavaScript syntax and DOM interaction checks passed for the intro, sound controls, profiles, video selection, project filters/dialogs, navigation targets, and local assets. Full browser visual review and real audio/video playback remain unverified because Chromium was unavailable in the development environment. This implementation adapts the reference's design; pixel-for-pixel equivalence has not been verified.
-
-## Portfolio assistant
-
-The Netflix-themed chatbot uses the existing backend at `https://portfolio-chatbot-ozkz.onrender.com/chat` with the original `{ input: message }` request and `{ message: reply }` response. Includes suggested questions, a typing indicator, duplicate-send protection, timeout/error handling, Escape-to-close, and mobile keyboard support. The free-tier service may need time to wake up. Chat styling and interactions are in `portfolio/css/index.css` and `portfolio/js/chatbot.js`.
-
-## Profile-specific content and project links
-
-Recruiter highlights production impact, experience, education, skills and selected projects. Developer highlights implemented systems, technical stacks, three live demos and the M-Sum-PAI source. Stalker follows the education/research/internship journey and credentials. Adventurer highlights adversarial ML and CPU–NPU research plus explainable AI. Profiles control visible sections, navigation, hero copy, top-picks links and project selection; project filters stay within the current profile. Profiles are restored on reload within the tab.
-
-Live demos restored from PDF hyperlink annotations: https://cyberguard-xai.netlify.app/ and https://skill-swap.netlify.app/. The original site supplied https://transcripto-ai.netlify.app/ and https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend. Missing research demo/source URLs are not guessed. Original certification links are preserved.
+TypeScript and the production build pass. DOM checks against the built JavaScript passed for the opening flow, four distinct profiles, anchor navigation, demo links, dialogs, and chatbot opening. Demo URLs returned HTTP 200 during the preceding audit. Full browser visual review and actual media playback remain unverified because the Chromium download failed in the development environment.

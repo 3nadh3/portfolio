@@ -1,0 +1,320 @@
+{
+  "projects": [
+    {
+      "id": "cyberguard",
+      "demo": "https://cyberguard-xai.netlify.app/",
+      "title": "CyberGuard XAI",
+      "label": "EXPLAINABLE AI",
+      "category": "ai",
+      "art": "cyber",
+      "symbol": "◈",
+      "description": "Making phishing detection understandable.",
+      "details": [
+        "Built a phishing classifier using DistilBERT with LIME and SHAP explanations and per-word risk-drop scores.",
+        "Created an interactive evasion guide with word swap/undo, paginated risk cards, and a live editor with LIME score tooltips.",
+        "Deployed a React/Vite frontend to Netlify and a FastAPI backend to Hugging Face Spaces and Render with automated CI/CD."
+      ],
+      "stack": [
+        "DistilBERT",
+        "LIME",
+        "SHAP",
+        "React",
+        "FastAPI"
+      ]
+    },
+    {
+      "id": "skillswap",
+      "demo": "https://skill-swap.netlify.app/",
+      "title": "SkillSwap",
+      "label": "FULL-STACK PLATFORM",
+      "category": "web",
+      "art": "swap",
+      "symbol": "⇄",
+      "description": "Connecting people through shared skills.",
+      "details": [
+        "Built a peer skill exchange platform with the MERN stack.",
+        "Implemented WebSocket-based real-time messaging and JWT-secured REST APIs.",
+        "Deployed with environment-secured configuration, MongoDB data models, and a scalable backend architecture."
+      ],
+      "stack": [
+        "MongoDB",
+        "Express",
+        "React",
+        "Node.js",
+        "WebSockets",
+        "JWT"
+      ]
+    },
+    {
+      "id": "yolo",
+      "title": "Adversarial YOLOv2",
+      "label": "COMPUTER VISION RESEARCH",
+      "category": "ai",
+      "art": "vision",
+      "symbol": "⌖",
+      "description": "Exploring how vision models can be challenged.",
+      "details": [
+        "Engineered an interactive adversarial YOLOv2 attack demo used by students.",
+        "Hosted on Hugging Face Spaces with a Cloudflare Worker proxy.",
+        "Research included replacing evolutionary optimization with a gradient-based method, reducing experiment runtime from 30–60 minutes to under three minutes."
+      ],
+      "stack": [
+        "YOLOv2",
+        "PyTorch",
+        "Hugging Face",
+        "Cloudflare"
+      ]
+    },
+    {
+      "id": "npu",
+      "title": "CPU–NPU Benchmarks",
+      "label": "HARDWARE SECURITY RESEARCH",
+      "category": "ai",
+      "art": "chip",
+      "symbol": "▦",
+      "description": "Understanding performance below the surface.",
+      "details": [
+        "Designed benchmarking scripts across deep learning workloads on AMD Ryzen AI hardware.",
+        "Used fine-grained cycle counting and DRAM contention metrics to analyze NPU execution patterns.",
+        "Collected performance data contributing to hardware security research publications."
+      ],
+      "stack": [
+        "Python",
+        "AMD Ryzen AI",
+        "XDNA 2",
+        "Benchmarking"
+      ]
+    },
+    {
+      "id": "msumpai",
+      "title": "M-Sum-PAI",
+      "label": "MULTIMODAL AI",
+      "category": "ai",
+      "art": "cyber",
+      "symbol": "▶",
+      "description": "Summaries across text, audio, video, and PDFs.",
+      "details": [
+        "Designed a performance-aware multimodal summarization system using Gemini 2.5 Flash and AssemblyAI.",
+        "Produces structured summaries in paragraph and bullet formats across text, audio, video, and PDF inputs."
+      ],
+      "stack": [
+        "React",
+        "Node.js",
+        "Express",
+        "Python",
+        "Gemini API",
+        "AssemblyAI"
+      ],
+      "demo": "https://transcripto-ai.netlify.app/",
+      "source": "https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend"
+    }
+  ],
+  "skills": {
+    "Languages": [
+      "Python",
+      "Java",
+      "JavaScript",
+      "C",
+      "SQL"
+    ],
+    "Web & APIs": [
+      "React",
+      "Node.js",
+      "Express",
+      "FastAPI",
+      "Vite",
+      "REST",
+      "WebSockets",
+      "JWT"
+    ],
+    "AI & Agents": [
+      "watsonx Orchestrate",
+      "MCP",
+      "PyTorch",
+      "Vertex AI",
+      "DistilBERT",
+      "YOLOv2",
+      "LIME",
+      "SHAP",
+      "Hugging Face"
+    ],
+    "Observability & Infrastructure": [
+      "Grafana",
+      "Prometheus",
+      "Loki",
+      "Redis",
+      "Docker",
+      "CI/CD"
+    ],
+    "Cloud": [
+      "AWS EC2 / S3 / IAM / RDS / Lambda",
+      "Google Cloud",
+      "IBM Cloud",
+      "Netlify",
+      "Render"
+    ],
+    "Databases & Tools": [
+      "MongoDB",
+      "MySQL",
+      "PostgreSQL",
+      "Git",
+      "GitHub",
+      "Postman",
+      "Bruno",
+      "OpenAPI"
+    ]
+  },
+  "profileViews": {
+    "Recruiter": {
+      "headline": "Software engineering.<br><em>Proven in production.</em>",
+      "bio": "Former IBM watsonx Orchestrate intern. I built four production AI agents, deployed observability across three environments, and reduced error investigation from minutes to seconds. M.S. Computer Science at CMU, expected May 2027.",
+      "sections": [
+        "highlights",
+        "experience",
+        "projects",
+        "skills",
+        "about",
+        "credentials",
+        "contact"
+      ],
+      "projects": [
+        "cyberguard",
+        "skillswap",
+        "msumpai"
+      ],
+      "title": "Selected projects for recruiters",
+      "picks": [
+        [
+          "Resume",
+          "resume/Trinadh_Musunuri_Resume.pdf"
+        ],
+        [
+          "IBM experience",
+          "#experience"
+        ],
+        [
+          "Technical skills",
+          "#skills"
+        ],
+        [
+          "Education",
+          "#about"
+        ],
+        [
+          "Contact me",
+          "#contact"
+        ]
+      ]
+    },
+    "Developer": {
+      "headline": "From API to interface.<br><em>Built end to end.</em>",
+      "bio": "Explore the implementations: explainable AI with FastAPI, real-time messaging with MERN and WebSockets, and multimodal summarization with Gemini and AssemblyAI. Open a title for its stack and try the live demo.",
+      "sections": [
+        "highlights",
+        "projects",
+        "skills",
+        "contact"
+      ],
+      "projects": [
+        "cyberguard",
+        "skillswap",
+        "msumpai"
+      ],
+      "title": "Builds you can explore",
+      "picks": [
+        [
+          "CyberGuard demo",
+          "https://cyberguard-xai.netlify.app/"
+        ],
+        [
+          "SkillSwap demo",
+          "https://skill-swap.netlify.app/"
+        ],
+        [
+          "M-Sum-PAI demo",
+          "https://transcripto-ai.netlify.app/"
+        ],
+        [
+          "Source code",
+          "https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend"
+        ],
+        [
+          "Engineering toolkit",
+          "#skills"
+        ]
+      ]
+    },
+    "Stalker": {
+      "headline": "The person<br><em>behind the code.</em>",
+      "bio": "I’m Trinadh Musunuri, a Computer Science master’s student at Central Michigan University. My journey connects university research, an IBM internship, and hands-on projects in AI and full-stack development.",
+      "sections": [
+        "journey",
+        "about",
+        "credentials",
+        "contact"
+      ],
+      "projects": [],
+      "title": "My journey",
+      "picks": [
+        [
+          "My journey",
+          "#journey"
+        ],
+        [
+          "Education",
+          "#about"
+        ],
+        [
+          "Learning & credentials",
+          "#credentials"
+        ],
+        [
+          "LinkedIn",
+          "https://www.linkedin.com/in/trinadh-musunuri/"
+        ],
+        [
+          "Say hello",
+          "#contact"
+        ]
+      ]
+    },
+    "Adventurer": {
+      "headline": "Challenge the model.<br><em>Explore the hardware.</em>",
+      "bio": "Explore adversarial vision experiments, CPU–NPU benchmarking, and explainable phishing detection. My CMU research examines model behavior and the hardware performance beneath it.",
+      "sections": [
+        "highlights",
+        "research-focus",
+        "projects",
+        "contact"
+      ],
+      "projects": [
+        "yolo",
+        "npu",
+        "cyberguard"
+      ],
+      "title": "Research and experiments",
+      "picks": [
+        [
+          "Adversarial vision",
+          "#research-focus"
+        ],
+        [
+          "CPU–NPU benchmarks",
+          "#projects"
+        ],
+        [
+          "Explainable AI",
+          "https://cyberguard-xai.netlify.app/"
+        ],
+        [
+          "Research background",
+          "#research-focus"
+        ],
+        [
+          "Collaborate",
+          "#contact"
+        ]
+      ]
+    }
+  }
+}
