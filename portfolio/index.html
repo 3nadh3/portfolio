@@ -6,7 +6,7 @@
   <meta name="description" content="Explore Trinadh Musunuri's work in AI, full-stack engineering, cloud systems, and hardware security research. Former IBM intern. M.S. Computer Science, May 2027.">
   <meta name="theme-color" content="#141414"><link rel="canonical" href="https://trinadh.dev/">
   <meta property="og:title" content="Trinadh Musunuri | Software Engineer"><meta property="og:description" content="AI. Cloud. Full stack. Explore the work behind the code."><meta property="og:url" content="https://trinadh.dev/">
-  <link rel="stylesheet" href="css/index.css"><script src="js/portfolio.js" defer></script>
+  <link rel="stylesheet" href="css/index.css"><script src="js/portfolio.js" defer></script><script src="js/chatbot.js" defer></script>
 </head>
 <body>
 <div id="intro-screen" class="intro-screen" hidden>
@@ -47,4 +47,11 @@ $ ./build-next.sh
 <dialog id="profiles" aria-labelledby="profiles-title"><button class="close" data-close="profiles" aria-label="Close profile selection">×</button><p class="wordmark">TRINADH</p><h2 id="profiles-title">Who's watching?</h2><p class="muted">Choose your lens. Explore the same story.</p><div class="profile-grid"><button data-profile="Recruiter"><span class="avatar red"><img data-avatar="Recruiter" alt=""></span>Recruiter</button><button data-profile="Developer"><span class="avatar blue"><img data-avatar="Developer" alt=""></span>Developer</button><button data-profile="Stalker"><span class="avatar gold"><img data-avatar="Stalker" alt=""></span>Stalker</button><button data-profile="Adventurer"><span class="avatar teal"><img data-avatar="Adventurer" alt=""></span>Adventurer</button></div><button class="browse" data-profile="Adventurer">Just browse the portfolio →</button></dialog>
 <dialog id="project-dialog" aria-labelledby="project-title"><button class="close" data-close="project-dialog" aria-label="Close project details">×</button><div id="project-detail"></div></dialog>
 <noscript><style>#profiles{display:none}</style><p class="catalog">Enable JavaScript for project details. Experience, skills in the resume, and contact links remain available.</p></noscript>
+<button id="chatbot-icon" class="chatbot-launcher" aria-controls="chatbot-container" aria-expanded="false"><span aria-hidden="true">◈</span> Ask Trinadh's AI</button>
+<section id="chatbot-container" class="chatbot-container" role="dialog" aria-labelledby="chatbot-title" hidden>
+  <div class="chatbot-header"><div><span class="chatbot-brand">T</span><div><h2 id="chatbot-title">Trinadh's Assistant</h2><p>Explore the story behind the code</p></div></div><button id="close-chatbot" aria-label="Close assistant">×</button></div>
+  <div id="chatbot-messages" class="chatbot-messages" role="log" aria-live="polite" aria-relevant="additions text"><div class="chatbot-message bot-message">Hi! Ask me about Trinadh's experience, projects, or skills.</div></div>
+  <div class="chatbot-suggestions" role="group" aria-label="Suggested questions"><button data-question="Tell me about Trinadh's IBM internship.">IBM experience</button><button data-question="What projects has Trinadh built?">Projects</button><button data-question="What are Trinadh's technical skills?">Skills</button></div>
+  <form id="chatbot-form" class="chatbot-input-area"><label class="sr-only" for="chatbot-input">Message Trinadh's assistant</label><input id="chatbot-input" name="message" placeholder="Ask about my work…" autocomplete="off" maxlength="2000" required><button id="chat-button" type="submit" aria-label="Send message">➤</button></form>
+</section>
 </body></html>

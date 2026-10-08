@@ -48,3 +48,7 @@ Open http://localhost:8080. Deploy `portfolio/` as the static site root. No buil
 ## Validation
 
 JavaScript syntax and DOM interaction checks passed for the intro, sound controls, profiles, video selection, project filters/dialogs, navigation targets, and local assets. Full browser visual review and real audio/video playback remain unverified because Chromium was unavailable in the development environment. This implementation adapts the reference's design; pixel-for-pixel equivalence has not been verified.
+
+## Portfolio assistant
+
+The Netflix-themed chatbot uses the existing backend at `https://portfolio-chatbot-ozkz.onrender.com/chat` with the original `{ input: message }` request and `{ message: reply }` response. Includes suggested questions, a typing indicator, duplicate-send protection, timeout/error handling, Escape-to-close, and mobile keyboard support. The free-tier service may need time to wake up. Chat styling and interactions are in `portfolio/css/index.css` and `portfolio/js/chatbot.js`.
