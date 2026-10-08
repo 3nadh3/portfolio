@@ -62,10 +62,30 @@ const introAudio=new Audio(referenceBase+'tudum.mp3');introAudio.preload='auto';
 let soundEnabled=true,entering=false;
 document.querySelector('#intro-mute').addEventListener('click',()=>{soundEnabled=!soundEnabled;introAudio.muted=!soundEnabled;document.querySelector('#intro-mute').textContent=soundEnabled?'Sound on ♫':'Sound off';document.querySelector('#intro-mute').setAttribute('aria-pressed',String(!soundEnabled));});
 enter.addEventListener('click',()=>{
-  if(entering)return;entering=true;
-  if(soundEnabled)introAudio.play().catch(()=>{});
-  intro.classList.add('entering');enter.disabled=true;
-  setTimeout(()=>{intro.hidden=true;profiles.showModal();},matchMedia('(prefers-reduced-motion: reduce)').matches?0:3000);
+  if(entering)return;entering=true;enter.disabled=true;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started=false,startFallback;
+  const finishIntro=()=>{
+    intro.hidden=true;intro.classList.remove('entering','intro-loading');
+    profiles.showModal();profiles.classList.add('profiles-arriving');
+    setTimeout(()=>profiles.classList.remove('profiles-arriving'),600);
+  };
+  const startSequence=()=>{
+    if(started)return;started=true;clearTimeout(startFallback);
+    intro.classList.remove('intro-loading');
+    if(reduced){finishIntro();return;}
+    const duration=Number.isFinite(introAudio.duration)?Math.max(3600,Math.min(6000,introAudio.duration*1000)):4100;
+    intro.style.setProperty('--intro-duration',duration+'ms');
+    intro.classList.add('entering');
+    setTimeout(finishIntro,duration);
+  };
+  intro.classList.add('intro-loading');
+  if(soundEnabled){
+    introAudio.addEventListener('playing',startSequence,{once:true});
+    // Begin the reveal with actual audio playback, rather than the network request.
+    startFallback=setTimeout(()=>{introAudio.pause();startSequence();},1800);
+    introAudio.play().catch(startSequence);
+  }else startSequence();
 });
 document.querySelector('#video-mute').addEventListener('click',()=>{heroVideo.muted=!heroVideo.muted;document.querySelector('#video-mute').textContent=heroVideo.muted?'Unmute ♫':'Mute ♫';document.querySelector('#video-mute').setAttribute('aria-pressed',String(!heroVideo.muted));});
 let previousProfile;try{previousProfile=sessionStorage.getItem('portfolio-profile');}catch{}
