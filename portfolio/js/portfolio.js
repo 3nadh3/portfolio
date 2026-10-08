@@ -70,7 +70,7 @@ enter.addEventListener('click',()=>{
 document.querySelector('#video-mute').addEventListener('click',()=>{heroVideo.muted=!heroVideo.muted;document.querySelector('#video-mute').textContent=heroVideo.muted?'Unmute ♫':'Mute ♫';document.querySelector('#video-mute').setAttribute('aria-pressed',String(!heroVideo.muted));});
 let previousProfile;try{previousProfile=sessionStorage.getItem('portfolio-profile');}catch{}
 applyProfile(avatarFiles[previousProfile]?previousProfile:'Recruiter');
-if(!previousProfile&&!location.hash){intro.hidden=false;enter.focus();}
+if(!previousProfile&&!location.hash){intro.hidden=false;}
 
 
 function applyProfile(profile){
