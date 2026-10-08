@@ -19,7 +19,7 @@ The reference assets are loaded from commit `6f691190bebcbcae9a16ec7bcf092201ff5
 
 ## Features
 
-- Full-screen name intro with click-to-enter sound and zoom/fade transition.
+- Full-screen name intro with click-to-enter sound and a playback-synchronized zoom/fade transition (about 4.1 seconds).
 - Recruiter, Developer, Stalker, and Adventurer profile selection.
 - Profile-specific background videos and top-picks heading.
 - Resume-based experience, skills, education, and projects.
