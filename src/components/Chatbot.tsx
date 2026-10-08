@@ -59,8 +59,11 @@ export default function Chatbot() {
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({input:question,history:history.current}),signal:controller.signal
       });
-      if(!res.ok)throw Error();
       const data=await res.json();
+      if(!res.ok) {
+        if(data.code==='PROVIDER_RATE_LIMITED')throw new Error('The AI service has reached its request limit. Please try again later.');
+        throw Error();
+      }
       if(typeof data.message!=='string'||!data.message.trim()||data.message==='error')throw Error();
       if(controller.signal.aborted)return;
       history.current=limitHistory([...history.current,{role:'user',content:question},{role:'assistant',content:data.message}]);
@@ -69,8 +72,10 @@ export default function Chatbot() {
       setSuggestions(followUps);
       saveSuggestions(followUps);
       setMessages(m=>[...m,{kind:'bot',text:data.message}]);
-    } catch {
-      setMessages(m=>[...m,{kind:'bot',text:'The assistant could not reply right now. Please try again.'}]);
+    } catch(error) {
+      const message=error instanceof Error&&error.message==='The AI service has reached its request limit. Please try again later.' ? error.message : 'The assistant could not reply right now. Please try again.';
+      setMessages(m=>[...m,{kind:'bot',text:message}]);
+      setInput(current=>current||question);
     } finally {
       clearTimeout(timer);
       activeRequest.current=null;
