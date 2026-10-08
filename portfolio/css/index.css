@@ -66,3 +66,9 @@ body,button,.wordmark,.intro-name{font-family:'Netflix Sans',Helvetica,Arial,san
 @keyframes intro-prompt-out{to{opacity:0}}
 @keyframes intro-light-sweep{0%,45%{opacity:0;transform:scaleX(.2)}68%{opacity:.7;transform:scaleX(.8)}85%{opacity:.4;transform:scaleX(1.4)}100%{opacity:0;transform:scaleX(2)}}
 @keyframes profile-reveal{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Never draw a rectangular frame around the opening wordmark. */
+#intro-screen #enter-portfolio,
+#intro-screen #enter-portfolio:focus,
+#intro-screen #enter-portfolio:focus-visible,
+#intro-screen #enter-portfolio:active{outline:0!important;border:0!important;box-shadow:none!important;-webkit-appearance:none;appearance:none}
