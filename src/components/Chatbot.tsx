@@ -1,10 +1,11 @@
 import {useState,useRef,useEffect} from 'react';
-import {MessageCircle,Send,X,ArrowUpRight} from 'lucide-react';
+import {MessageCircle,ArrowUp,X,ArrowUpRight,RotateCcw,Sparkles} from 'lucide-react';
 import {loadHistory,saveHistory,limitHistory,type ChatTurn} from '../lib/chatHistory';
 import ChatMarkdown from './ChatMarkdown';
 import {chatErrorMessage,failureMessage} from '../lib/chatError';
+import ChatActivity,{JamboAvatar} from './ChatActivity';
 
-const greeting = {kind:'bot',text:"Hi! Ask me about Trinadh's experience, projects, or skills."};
+const greeting = {kind:'bot',text:"Hey, I'm **Jambo**.\n\nYour backstage pass to Trinadh's projects, ideas, and the stories behind the code. What are you curious about?"};
 const SUGGESTIONS_KEY = 'trinadh-chat-suggestions-v1';
 function validSuggestions(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
@@ -28,10 +29,12 @@ export default function Chatbot() {
   const activeRequest = useRef<AbortController|null>(null);
   const field = useRef<HTMLInputElement>(null);
   const log = useRef<HTMLDivElement>(null);
+  const launcher = useRef<HTMLButtonElement>(null);
   const busy = useRef(false);
-  useEffect(()=>()=>{activeRequest.current?.abort()},[]);
+  useEffect(()=>()=>{activeRequest.current?.abort('unmount')},[]);
   useEffect(()=>{if(open)field.current?.focus()},[open]);
   useEffect(()=>{if(log.current)log.current.scrollTop=log.current.scrollHeight},[messages,pending]);
+  const close = () => {setOpen(false);launcher.current?.focus()};
 
   const newChat = () => {
     if(busy.current)return;
@@ -53,7 +56,7 @@ export default function Chatbot() {
     saveSuggestions([]);
     setMessages(m=>[...m,{kind:'user',text:question}]);
     const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),90000);
+    const timer=setTimeout(()=>controller.abort('timeout'),60000);
     activeRequest.current=controller;
     let messageOnFailure=failureMessage;
     try {
@@ -75,42 +78,49 @@ export default function Chatbot() {
       saveSuggestions(followUps);
       setMessages(m=>[...m,{kind:'bot',text:data.message}]);
     } catch {
-      setMessages(m=>[...m,{kind:'bot',text:messageOnFailure}]);
+      if(controller.signal.reason==='unmount')return;
+      if(controller.signal.aborted)messageOnFailure=controller.signal.reason==='timeout'
+        ?"That reply took too long. The service may be waking up—your question is below, ready to try again."
+        :"Paused. Your question is back in the box whenever you're ready.";
+      setMessages(m=>[...m,{kind:'notice',text:messageOnFailure}]);
       setInput(current=>current||question);
     } finally {
       clearTimeout(timer);
       activeRequest.current=null;
       busy.current=false;
+      if(controller.signal.reason==='unmount')return;
       setPending(false);
       field.current?.focus();
     }
   };
   return <>
-    <button className="chat-launcher" aria-expanded={open} aria-controls="chat-panel" onClick={()=>setOpen(!open)}>
-      <MessageCircle size={18}/>Ask Trinadh's AI
+    <button ref={launcher} className="chat-launcher" aria-expanded={open} aria-controls="chat-panel" onClick={()=>open?close():setOpen(true)}>
+      <MessageCircle size={18}/><span>Chat with Jambo</span><span className="chat-launcher-spark" aria-hidden="true"><Sparkles size={13}/></span>
     </button>
-    {open&&<section id="chat-panel" className="chat-panel" role="dialog" aria-label="Trinadh's assistant" onKeyDown={e=>{if(e.key==='Escape')setOpen(false)}}>
-      <div className="flex justify-between items-center p-5 border-b border-white/10 shrink-0">
-        <div><strong>Trinadh's Assistant</strong><p className="text-xs text-white/50 mt-1">Explore the story behind the code</p></div>
-        <div className="flex items-center gap-3">
-          <button type="button" disabled={pending} onClick={newChat} className="text-xs text-white/70 disabled:opacity-40">New chat</button>
-          <button onClick={()=>setOpen(false)} aria-label="Close assistant"><X size={20}/></button>
+    {open&&<section id="chat-panel" className="chat-panel" role="dialog" aria-label="Jambo, Trinadh's AI assistant" onKeyDown={e=>{if(e.key==='Escape')close()}}>
+      <div className="chat-header">
+        <div className="chat-identity"><JamboAvatar/><div><strong>Jambo<span>AI</span></strong><p>A curious little portfolio sidekick</p></div></div>
+        <div className="chat-header-actions">
+          <button type="button" disabled={pending} onClick={newChat} aria-label="New chat" title="New chat"><RotateCcw size={16}/></button>
+          <button onClick={close} aria-label="Close assistant"><X size={19}/></button>
         </div>
       </div>
-      <div ref={log} role="log" aria-live="polite" className="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-4">
-        {messages.map((m,i)=><div key={i} className={'chat-message '+m.kind}>
-          {m.kind==='bot'?<ChatMarkdown text={m.text}/>:m.text}
+      <div ref={log} role="log" aria-label="Conversation" aria-live="polite" className="chat-log">
+        {messages.map((m,i)=><div key={i} className={'chat-turn '+m.kind+(i===0?' chat-welcome':'')}>
+          {m.kind==='bot'&&i>0&&<span className="chat-speaker">Jambo</span>}
+          {i===0&&<div className="chat-welcome-mark" aria-hidden="true"><Sparkles size={19}/><span>GOOD QUESTIONS. REAL STORIES.</span></div>}
+          <div className={'chat-message '+m.kind}>{m.kind==='user'?m.text:<ChatMarkdown text={m.text}/>}</div>
         </div>)}
-        {pending&&<p role="status" className="text-sm text-white/50 animate-pulse">Thinking…</p>}
+        {pending&&<ChatActivity onStop={()=>activeRequest.current?.abort('user')}/>}
       </div>
       {!!suggestions.length&&!pending&&<div className="chat-follow-ups" aria-label="Suggested follow-up questions">
-        <p>Continue the conversation</p>
+        <p>A little further down the rabbit hole</p>
         {suggestions.map(q=><button key={q} type="button" onClick={()=>send(q)}><span>{q}</span><ArrowUpRight size={14} aria-hidden="true"/></button>)}
       </div>}
-      <form className="p-4 border-t border-white/10 flex gap-2 shrink-0" onSubmit={e=>{e.preventDefault();send()}}>
-        <input ref={field} aria-label="Message assistant" value={input} onChange={e=>setInput(e.target.value)} maxLength={2000} placeholder="Ask about my work…" className="min-w-0 flex-1 bg-white/10 rounded p-3 text-sm"/>
-        <button disabled={pending||!input.trim()} className="bg-netflix-red p-3 rounded disabled:opacity-40" aria-label="Send message"><Send size={18}/></button>
-      </form>
+      <div className="chat-composer"><form onSubmit={e=>{e.preventDefault();send()}}>
+        <input ref={field} aria-label="Message assistant" value={input} onChange={e=>setInput(e.target.value)} maxLength={2000} placeholder="Follow your curiosity…" autoComplete="off"/>
+        <button disabled={pending||!input.trim()} aria-label="Send message"><ArrowUp size={19}/></button>
+      </form><p>AI replies · grounded in Trinadh's portfolio</p></div>
     </section>}
   </>;
 }
