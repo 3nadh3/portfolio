@@ -53,3 +53,16 @@ body,button,.wordmark,.intro-name{font-family:'Netflix Sans',Helvetica,Arial,san
 /* Opening screen: indicate keyboard focus without framing the entire wordmark. */
 #enter-portfolio:focus-visible{outline:none}
 #enter-portfolio:focus-visible .intro-prompt{text-decoration:underline;text-underline-offset:6px;text-decoration-color:#e50914;text-decoration-thickness:2px}
+
+/* Hold the wordmark through the sound, then reveal the profile screen. */
+.intro-loading .intro-prompt{opacity:.5;animation:none}
+.entering .intro-name{transition:none;animation:intro-cinematic var(--intro-duration,4100ms) cubic-bezier(.4,0,.2,1) forwards;transform-origin:center}
+.entering .intro-prompt{animation:intro-prompt-out 450ms ease forwards}
+.entering .sound-control{opacity:0;transition:opacity .3s}
+.intro-screen.entering:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 10%,#e5091420 30%,transparent 45%,#e5091433 50%,transparent 55%,#e5091420 70%,transparent 90%);animation:intro-light-sweep var(--intro-duration,4100ms) ease forwards}
+.profiles-arriving .profile-grid{animation:profile-reveal .6s ease both}
+.profiles-arriving #profiles-title{animation:profile-reveal .45s ease both}
+@keyframes intro-cinematic{0%{opacity:1;transform:scale(1);filter:blur(0);text-shadow:none}12%{opacity:1;transform:scale(1.025);filter:blur(0);text-shadow:0 0 30px #e5091460}45%{opacity:1;transform:scale(1.025);filter:blur(0);text-shadow:0 0 16px #e5091430}65%{opacity:1;transform:scale(1.11);filter:blur(0)}88%{opacity:.75;transform:scale(1.6);filter:blur(1px)}100%{opacity:0;transform:scale(2.3);filter:blur(8px)}}
+@keyframes intro-prompt-out{to{opacity:0}}
+@keyframes intro-light-sweep{0%,45%{opacity:0;transform:scaleX(.2)}68%{opacity:.7;transform:scaleX(.8)}85%{opacity:.4;transform:scaleX(1.4)}100%{opacity:0;transform:scaleX(2)}}
+@keyframes profile-reveal{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
