@@ -46,7 +46,7 @@ For existing static hosting, publish **`portfolio/`**. For a host that builds fr
 - `src/index.css`: upstream Tailwind styling plus personalized components.
 - `public/`: original favicon, resume, intro sound, avatars, and default background.
 
-The sound and default video are hosted locally. Developer, Stalker, and Adventurer videos use pinned upstream URLs; fonts use the upstream Netflix Sans font URLs. Those external resources need network access. The opening sound begins after user interaction. Videos start muted and have a sound toggle.
+The sound and default video are hosted locally. Developer, Stalker, and Adventurer videos use pinned upstream URLs; fonts use the upstream Netflix Sans font URLs. Those external resources need network access. The intro follows the reference’s one-second reveal delay and one-second scale/opacity transitions. The profile selector appears three seconds after sound playback starts, with its own fade/slide entrance. The identical upstream sound is preloaded at volume 0.7 and continues across that route transition rather than being cut off. Muted, rejected-audio, and reduced-motion flows have fallbacks. Animated blur was removed. Netflix Sans bold is preloaded, and the heavier profile/chat route loads separately from the intro. Videos start muted and have a sound toggle.
 
 ## Profiles
 
@@ -63,7 +63,7 @@ The sound and default video are hosted locally. Developer, Stalker, and Adventur
 
 The chatbot uses `https://portfolio-chatbot-ozkz.onrender.com/chat`. Each request sends `{ input, history }`, with completed `{ role, content }` user/assistant messages; the response remains `{ message }`. Recent conversation history stays in session storage for this browser tab across profile changes and reloads. **New chat** clears it. Only successful exchanges reach the LLM; greetings, pending indicators, and error messages are excluded. Context is bounded to 12 recent turns and 24,000 characters.
 
-Assistant replies render as Markdown with headings, lists, bold labels, links, and scrollable tables/code blocks. Raw HTML is not rendered. The backend returns `{ message, suggestions }`: Gemini generates up to three follow-up questions from the current question and conversation history in the same request. There are no fixed suggestion buttons. Clicking a suggestion sends that exact question with the existing history; suggestions refresh after a successful answer and persist within the tab. Privacy refusals have no suggested follow-ups.
+Assistant replies render as Markdown with headings, lists, bold labels, links, and scrollable tables/code blocks. Raw HTML is not rendered. The backend returns `{ message, suggestions }`: Gemini generates up to three follow-up questions from the current question and conversation history in the same request. There are no fixed suggestion buttons. Clicking a suggestion sends that exact question with the existing history; suggestions refresh after a successful answer and persist within the tab. Privacy refusals have no suggested follow-ups. Rate-limit errors show a request-limit message and retain the question for retry. Other failures provide clickable email and LinkedIn links so visitors can report the issue to Trinadh; those UI error messages never enter model history.
 
 The matching [Node.js backend](https://github.com/3nadh3/portfolio-chatbot/tree/master) validates history, maps assistant messages to Gemini model messages, and supplies its own resume-based system instructions. Conversation state is request-local rather than shared between visitors.
 

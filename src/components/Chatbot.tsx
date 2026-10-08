@@ -2,6 +2,8 @@ import {useState,useRef,useEffect} from 'react';
 import {MessageCircle,Send,X,ArrowUpRight} from 'lucide-react';
 import {loadHistory,saveHistory,limitHistory,type ChatTurn} from '../lib/chatHistory';
 import ChatMarkdown from './ChatMarkdown';
+import {myInfo} from '../lib/data';
+const failureMessage=`The assistant could not reply right now. Please try again. If it continues, [email Trinadh](mailto:${myInfo.email}) or [message him on LinkedIn](${myInfo.linkedin}) so he can fix it.`;
 
 const greeting = {kind:'bot',text:"Hi! Ask me about Trinadh's experience, projects, or skills."};
 const SUGGESTIONS_KEY = 'trinadh-chat-suggestions-v1';
@@ -59,9 +61,10 @@ export default function Chatbot() {
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({input:question,history:history.current}),signal:controller.signal
       });
+      if(res.status===429)throw new Error('The AI service has reached its request limit. Please try again later.');
       const data=await res.json();
       if(!res.ok) {
-        if(data.code==='PROVIDER_RATE_LIMITED')throw new Error('The AI service has reached its request limit. Please try again later.');
+        if(res.status===429||data.code==='PROVIDER_RATE_LIMITED')throw new Error('The AI service has reached its request limit. Please try again later.');
         throw Error();
       }
       if(typeof data.message!=='string'||!data.message.trim()||data.message==='error')throw Error();
@@ -73,7 +76,7 @@ export default function Chatbot() {
       saveSuggestions(followUps);
       setMessages(m=>[...m,{kind:'bot',text:data.message}]);
     } catch(error) {
-      const message=error instanceof Error&&error.message==='The AI service has reached its request limit. Please try again later.' ? error.message : 'The assistant could not reply right now. Please try again.';
+      const message=error instanceof Error&&error.message==='The AI service has reached its request limit. Please try again later.' ? error.message : failureMessage;
       setMessages(m=>[...m,{kind:'bot',text:message}]);
       setInput(current=>current||question);
     } finally {
