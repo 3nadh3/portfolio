@@ -52,3 +52,9 @@ JavaScript syntax and DOM interaction checks passed for the intro, sound control
 ## Portfolio assistant
 
 The Netflix-themed chatbot uses the existing backend at `https://portfolio-chatbot-ozkz.onrender.com/chat` with the original `{ input: message }` request and `{ message: reply }` response. Includes suggested questions, a typing indicator, duplicate-send protection, timeout/error handling, Escape-to-close, and mobile keyboard support. The free-tier service may need time to wake up. Chat styling and interactions are in `portfolio/css/index.css` and `portfolio/js/chatbot.js`.
+
+## Profile-specific content and project links
+
+Recruiter highlights production impact, experience, education, skills and selected projects. Developer highlights implemented systems, technical stacks, three live demos and the M-Sum-PAI source. Stalker follows the education/research/internship journey and credentials. Adventurer highlights adversarial ML and CPU–NPU research plus explainable AI. Profiles control visible sections, navigation, hero copy, top-picks links and project selection; project filters stay within the current profile. Profiles are restored on reload within the tab.
+
+Live demos restored from PDF hyperlink annotations: https://cyberguard-xai.netlify.app/ and https://skill-swap.netlify.app/. The original site supplied https://transcripto-ai.netlify.app/ and https://github.com/3nadh3/AI-Transcriber-Summarize-Frontend. Missing research demo/source URLs are not guessed. Original certification links are preserved.
