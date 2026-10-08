@@ -29,12 +29,23 @@ export default function Chatbot() {
   const activeRequest = useRef<AbortController|null>(null);
   const field = useRef<HTMLInputElement>(null);
   const log = useRef<HTMLDivElement>(null);
+  const latestReply = useRef<HTMLDivElement>(null);
   const launcher = useRef<HTMLButtonElement>(null);
   const busy = useRef(false);
   const requestStarted = useRef(0);
   useEffect(()=>()=>{activeRequest.current?.abort('unmount')},[]);
   useEffect(()=>{if(open)field.current?.focus({preventScroll:true})},[open]);
-  useLayoutEffect(()=>{if(open&&log.current)log.current.scrollTop=log.current.scrollHeight},[open,messages,pending,suggestions]);
+  useLayoutEffect(()=>{
+    const viewport=log.current;
+    if(!open||!viewport)return;
+    viewport.scrollTop=viewport.scrollHeight;
+    const reply=latestReply.current;
+    if(reply){
+      // Keep the start of a long answer visible instead of jumping past it to the suggestions.
+      const hidden=viewport.getBoundingClientRect().top+12-reply.getBoundingClientRect().top;
+      if(hidden>0)viewport.scrollTop=Math.max(0,viewport.scrollTop-hidden);
+    }
+  },[open,messages,pending,suggestions]);
   const close = () => {setOpen(false);launcher.current?.focus()};
 
   const newChat = () => {
@@ -108,14 +119,14 @@ export default function Chatbot() {
         </div>
       </div>
       <div ref={log} role="log" aria-label="Conversation" aria-live="polite" className="chat-log">
-        {messages.map((m,i)=><div key={i} className={'chat-turn '+m.kind+(i===0?' chat-welcome':'')}>
+        {messages.map((m,i)=><div key={i} ref={m.kind==='bot'&&i===messages.length-1?latestReply:undefined} className={'chat-turn '+m.kind+(i===0?' chat-welcome':'')}>
           {m.kind==='bot'&&i>0&&<span className="chat-speaker">Jambo</span>}
           {i===0&&<div className="chat-welcome-mark" aria-hidden="true"><Sparkles size={19}/><span>GOOD QUESTIONS. REAL STORIES.</span></div>}
           <div className={'chat-message '+m.kind}>{m.kind==='user'?m.text:<ChatMarkdown text={m.text}/>}</div>
         </div>)}
         {pending&&<ChatActivity startedAt={requestStarted.current} onStop={()=>activeRequest.current?.abort('user')}/>}
         {!!suggestions.length&&!pending&&<div className="chat-follow-ups" aria-label="Suggested follow-up questions">
-        <p>A little further down the rabbit hole</p>
+        <p>Keep exploring</p>
         {suggestions.map(q=><button key={q} type="button" onClick={()=>send(q)}><span>{q}</span><ArrowUpRight size={14} aria-hidden="true"/></button>)}
       </div>}
       </div>

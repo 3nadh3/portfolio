@@ -15,6 +15,7 @@ const Chatbot=mod.exports.default;
 async function setup() {
   const dom=new JSDOM('<div id="root"></div>',{url:'https://portfolio.test'});
   Object.defineProperty(dom.window.HTMLElement.prototype,'scrollHeight',{get(){return this.classList.contains('chat-log')?1000:0},configurable:true});
+  dom.window.HTMLElement.prototype.getBoundingClientRect=function(){return {top:this.classList.contains('chat-log')?0:20}};
   Object.assign(global,{window:dom.window,document:dom.window.document,sessionStorage:dom.window.sessionStorage,IS_REACT_ACT_ENVIRONMENT:true});
   const requests=[];
   global.fetch=(_,options)=>new Promise((resolve,reject)=>{
@@ -124,4 +125,21 @@ test('reopening during a reply keeps the request and its elapsed timer',async()=
     assert.equal(ui.requests.length,1);
     await ui.click('.chat-wait-controls button');
   } finally {Date.now=originalNow;await ui.dispose()}
+});
+
+test('a long reply stays visible from its beginning instead of scrolling past it to the follow-ups',async()=>{
+  const ui=await setup();
+  try {
+    await ui.send('Explain the research in detail');
+    await act(async()=>ui.requests[0].resolve({message:'The research explores adversarial machine learning.',suggestions:['Which technique did he use?']}));
+    const proto=ui.dom.window.HTMLElement.prototype;
+    const bounds=proto.getBoundingClientRect;
+    proto.getBoundingClientRect=function(){
+      return this.matches('.chat-turn.bot:not(.chat-welcome)')?{top:100-this.parentElement.scrollTop}:bounds.call(this);
+    };
+    await ui.click('[aria-label="Close assistant"]');
+    await ui.click('.chat-launcher');
+    assert.equal(document.querySelector('.chat-turn.bot:not(.chat-welcome)').getBoundingClientRect().top,12);
+    assert.ok(document.querySelector('.chat-log .chat-follow-ups'));
+  } finally {await ui.dispose()}
 });
