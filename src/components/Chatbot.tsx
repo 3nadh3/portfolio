@@ -2,8 +2,7 @@ import {useState,useRef,useEffect} from 'react';
 import {MessageCircle,Send,X,ArrowUpRight} from 'lucide-react';
 import {loadHistory,saveHistory,limitHistory,type ChatTurn} from '../lib/chatHistory';
 import ChatMarkdown from './ChatMarkdown';
-import {myInfo} from '../lib/data';
-const failureMessage=`The assistant could not reply right now. Please try again. If it continues, [email Trinadh](mailto:${myInfo.email}) or [message him on LinkedIn](${myInfo.linkedin}) so he can fix it.`;
+import {chatErrorMessage,failureMessage} from '../lib/chatError';
 
 const greeting = {kind:'bot',text:"Hi! Ask me about Trinadh's experience, projects, or skills."};
 const SUGGESTIONS_KEY = 'trinadh-chat-suggestions-v1';
@@ -56,18 +55,18 @@ export default function Chatbot() {
     const controller=new AbortController();
     const timer=setTimeout(()=>controller.abort(),90000);
     activeRequest.current=controller;
+    let messageOnFailure=failureMessage;
     try {
       const res=await fetch('https://portfolio-chatbot-ozkz.onrender.com/chat',{
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({input:question,history:history.current}),signal:controller.signal
       });
-      if(res.status===429)throw new Error('The AI service has reached its request limit. Please try again later.');
-      const data=await res.json();
+      const data=await res.json().catch(()=>null);
       if(!res.ok) {
-        if(res.status===429||data.code==='PROVIDER_RATE_LIMITED')throw new Error('The AI service has reached its request limit. Please try again later.');
+        messageOnFailure=chatErrorMessage(res.status,data);
         throw Error();
       }
-      if(typeof data.message!=='string'||!data.message.trim()||data.message==='error')throw Error();
+      if(!data||typeof data.message!=='string'||!data.message.trim()||data.message==='error')throw Error();
       if(controller.signal.aborted)return;
       history.current=limitHistory([...history.current,{role:'user',content:question},{role:'assistant',content:data.message}]);
       saveHistory(history.current);
@@ -75,9 +74,8 @@ export default function Chatbot() {
       setSuggestions(followUps);
       saveSuggestions(followUps);
       setMessages(m=>[...m,{kind:'bot',text:data.message}]);
-    } catch(error) {
-      const message=error instanceof Error&&error.message==='The AI service has reached its request limit. Please try again later.' ? error.message : failureMessage;
-      setMessages(m=>[...m,{kind:'bot',text:message}]);
+    } catch {
+      setMessages(m=>[...m,{kind:'bot',text:messageOnFailure}]);
       setInput(current=>current||question);
     } finally {
       clearTimeout(timer);

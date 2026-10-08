@@ -14,7 +14,9 @@ export default function ProfileSelection() {
     <h1 className="text-white text-4xl font-medium mb-16 animate-fade-in">Who's Watching?</h1>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 animate-slide-in">
       {profiles.map(p=><Link key={p.type} to={'/profile/'+p.type.toLowerCase()} className="group flex flex-col items-center text-center text-netflix-gray hover:text-white transform transition-transform duration-300 hover:scale-110">
-        <img src={'./lovable-uploads/'+p.avatar} alt="" className="w-28 h-28 md:w-36 md:h-36 mb-4 object-cover rounded border-4 border-transparent group-hover:border-white group-focus-visible:border-white transition-[transform,border-color] duration-300 group-hover:scale-105"/>
+        <div className="w-28 h-28 md:w-36 md:h-36 mb-4 overflow-hidden rounded border-4 border-transparent group-hover:border-white group-focus-visible:border-white transition-[transform,border-color] duration-300 group-hover:scale-105">
+          <img src={'./lovable-uploads/'+p.avatar} alt="" className={'w-full h-full object-cover'+(p.type==='Recruiter'?' scale-[1.24] translate-x-[3%] -translate-y-[3%]':'')}/>
+        </div>
         <span className="text-xl transition-colors duration-300">{p.type}</span>
       </Link>)}
     </div>
