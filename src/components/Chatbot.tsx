@@ -1,4 +1,4 @@
-import {useState,useRef,useEffect} from 'react';
+import {useState,useRef,useEffect,useLayoutEffect} from 'react';
 import {MessageCircle,ArrowUp,X,ArrowUpRight,RotateCcw,Sparkles} from 'lucide-react';
 import {loadHistory,saveHistory,limitHistory,type ChatTurn} from '../lib/chatHistory';
 import ChatMarkdown from './ChatMarkdown';
@@ -31,9 +31,10 @@ export default function Chatbot() {
   const log = useRef<HTMLDivElement>(null);
   const launcher = useRef<HTMLButtonElement>(null);
   const busy = useRef(false);
+  const requestStarted = useRef(0);
   useEffect(()=>()=>{activeRequest.current?.abort('unmount')},[]);
-  useEffect(()=>{if(open)field.current?.focus()},[open]);
-  useEffect(()=>{if(log.current)log.current.scrollTop=log.current.scrollHeight},[messages,pending]);
+  useEffect(()=>{if(open)field.current?.focus({preventScroll:true})},[open]);
+  useLayoutEffect(()=>{if(open&&log.current)log.current.scrollTop=log.current.scrollHeight},[open,messages,pending,suggestions]);
   const close = () => {setOpen(false);launcher.current?.focus()};
 
   const newChat = () => {
@@ -50,6 +51,7 @@ export default function Chatbot() {
     const question=text.trim();
     if(!question||busy.current)return;
     busy.current=true;
+    requestStarted.current=Date.now();
     setPending(true);
     setInput('');
     setSuggestions([]);
@@ -111,12 +113,12 @@ export default function Chatbot() {
           {i===0&&<div className="chat-welcome-mark" aria-hidden="true"><Sparkles size={19}/><span>GOOD QUESTIONS. REAL STORIES.</span></div>}
           <div className={'chat-message '+m.kind}>{m.kind==='user'?m.text:<ChatMarkdown text={m.text}/>}</div>
         </div>)}
-        {pending&&<ChatActivity onStop={()=>activeRequest.current?.abort('user')}/>}
-      </div>
-      {!!suggestions.length&&!pending&&<div className="chat-follow-ups" aria-label="Suggested follow-up questions">
+        {pending&&<ChatActivity startedAt={requestStarted.current} onStop={()=>activeRequest.current?.abort('user')}/>}
+        {!!suggestions.length&&!pending&&<div className="chat-follow-ups" aria-label="Suggested follow-up questions">
         <p>A little further down the rabbit hole</p>
         {suggestions.map(q=><button key={q} type="button" onClick={()=>send(q)}><span>{q}</span><ArrowUpRight size={14} aria-hidden="true"/></button>)}
       </div>}
+      </div>
       <div className="chat-composer"><form onSubmit={e=>{e.preventDefault();send()}}>
         <input ref={field} aria-label="Message assistant" value={input} onChange={e=>setInput(e.target.value)} maxLength={2000} placeholder="Follow your curiosity…" autoComplete="off"/>
         <button disabled={pending||!input.trim()} aria-label="Send message"><ArrowUp size={19}/></button>

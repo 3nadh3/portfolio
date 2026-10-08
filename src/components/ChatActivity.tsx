@@ -7,13 +7,12 @@ export function JamboAvatar({animated=false}: {animated?: boolean}) {
   </span>;
 }
 
-export default function ChatActivity({onStop}: {onStop:()=>void}) {
-  const [elapsed,setElapsed]=useState(0);
+export default function ChatActivity({onStop,startedAt}: {onStop:()=>void;startedAt:number}) {
+  const [elapsed,setElapsed]=useState(()=>Math.max(0,Math.floor((Date.now()-startedAt)/1000)));
   useEffect(()=>{
-    const started=Date.now();
-    const timer=setInterval(()=>setElapsed(Math.floor((Date.now()-started)/1000)),1000);
+    const timer=setInterval(()=>setElapsed(Math.max(0,Math.floor((Date.now()-startedAt)/1000))),1000);
     return ()=>clearInterval(timer);
-  },[]);
+  },[startedAt]);
   const title=elapsed>=25?'Still waiting for the AI service':elapsed>=10?'Taking a little longer…':'A little spark of curiosity…';
   return <div className="chat-activity">
     <JamboAvatar animated/>

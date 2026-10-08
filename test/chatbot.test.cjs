@@ -14,6 +14,7 @@ const Chatbot=mod.exports.default;
 
 async function setup() {
   const dom=new JSDOM('<div id="root"></div>',{url:'https://portfolio.test'});
+  Object.defineProperty(dom.window.HTMLElement.prototype,'scrollHeight',{get(){return this.classList.contains('chat-log')?1000:0},configurable:true});
   Object.assign(global,{window:dom.window,document:dom.window.document,sessionStorage:dom.window.sessionStorage,IS_REACT_ACT_ENVIRONMENT:true});
   const requests=[];
   global.fetch=(_,options)=>new Promise((resolve,reject)=>{
@@ -90,4 +91,37 @@ test('provider daily quota errors stop the animation and remain outside model hi
     assert.equal(document.querySelector('input').value,'Hello');
     assert.equal(document.querySelector('.chat-follow-ups'),null);
   } finally {await ui.dispose()}
+});
+
+test('closing and reopening restores the latest answer with suggestions in the same scrolling area',async()=>{
+  const ui=await setup();
+  try {
+    await ui.send('Tell me about his projects');
+    await act(async()=>ui.requests[0].resolve({message:'CyberGuard spots suspicious emails.',suggestions:['How does it work?']}));
+    const count=document.querySelectorAll('.chat-turn').length;
+    assert.ok(document.querySelector('.chat-log .chat-follow-ups'));
+    document.querySelector('.chat-log').scrollTop=0;
+    await ui.click('[aria-label="Close assistant"]');
+    assert.equal(document.querySelector('.chat-log'),null);
+    await ui.click('.chat-launcher');
+    assert.equal(document.querySelector('.chat-log').scrollTop,1000);
+    assert.equal(document.querySelectorAll('.chat-turn').length,count);
+    assert.ok(document.querySelector('.chat-log .chat-follow-ups'));
+    assert.equal(ui.requests.length,1);
+  } finally {await ui.dispose()}
+});
+
+test('reopening during a reply keeps the request and its elapsed timer',async()=>{
+  const ui=await setup();const originalNow=Date.now;const started=originalNow();
+  try {
+    Date.now=()=>started;
+    await ui.send('What is his research?');
+    await ui.click('[aria-label="Close assistant"]');
+    Date.now=()=>started+31000;
+    await ui.click('.chat-launcher');
+    assert.match(document.querySelector('.chat-wait-controls').textContent,/31s elapsed/);
+    assert.match(document.querySelector('.chat-activity').textContent,/Still waiting/);
+    assert.equal(ui.requests.length,1);
+    await ui.click('.chat-wait-controls button');
+  } finally {Date.now=originalNow;await ui.dispose()}
 });
