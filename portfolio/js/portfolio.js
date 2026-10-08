@@ -26,11 +26,39 @@ document.querySelector('#profile-toggle').addEventListener('click',()=>profiles.
 document.querySelectorAll('[data-profile]').forEach(button=>button.addEventListener('click',()=>{
   const profile=button.dataset.profile; document.querySelector('#profile-toggle').textContent=profile[0];document.querySelector('#profile-toggle').setAttribute('aria-label',`${profile} view: change profile`);profiles.close();
   try {sessionStorage.setItem('portfolio-profile',profile);}catch {}
-  const section={Recruiter:'experience',Developer:'projects',Researcher:'projects',Explorer:'home'}[profile];
-  if(profile==='Researcher')document.querySelector('[data-filter="ai"]').click();else document.querySelector('[data-filter="all"]').click();
+  setProfileMedia(profile);
+  const section='home';
+  if(profile==='Developer')document.querySelector('[data-filter="ai"]').click();else document.querySelector('[data-filter="all"]').click();
   document.getElementById(section).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
 }));
 document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.close).close()));
 document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}}));
 renderProjects();document.querySelector('#year').textContent=new Date().getFullYear();
-try {if(!sessionStorage.getItem('portfolio-profile')&&!location.hash)profiles.showModal();}catch {}
+const referenceBase='https://raw.githubusercontent.com/shamihsnn/netflix-portfolio/6f691190bebcbcae9a16ec7bcf092201ff5eb71f/public/';
+const avatarFiles={Recruiter:'27c510dc-dc9f-4470-a7b9-34279eb80bca.jpeg',Developer:'c475c34c-8f67-467b-a5d4-f5421e323810.jpg',Stalker:'1f10192c-5884-49ba-b201-08f2144721b6.jpg',Adventurer:'825adb96-f01f-42ec-8650-1bbaebffd433.jpg'};
+const videoFiles={Recruiter:'background.mp4',Developer:'coding.mp4',Stalker:'stalker.mp4',Adventurer:'adventurer-background.mp4'};
+const heroVideo=document.querySelector('#hero-video');
+function setProfileMedia(profile){
+  heroVideo.src=referenceBase+'video/'+videoFiles[profile];
+  heroVideo.muted=true;document.querySelector('#video-mute').textContent='Unmute ♫';document.querySelector('#video-mute').setAttribute('aria-pressed','false');
+  heroVideo.play().catch(()=>{});
+  document.querySelector('#picks-title').textContent="Today's Top Picks for "+profile.toLowerCase();
+  document.querySelector('#profile-toggle').style.backgroundImage=`url(${referenceBase}lovable-uploads/${avatarFiles[profile]})`;
+  document.querySelector('#profile-toggle').textContent='';
+}
+for(const image of document.querySelectorAll('[data-avatar]'))image.src=referenceBase+'lovable-uploads/'+avatarFiles[image.dataset.avatar];
+const intro=document.querySelector('#intro-screen'),enter=document.querySelector('#enter-portfolio');
+const introAudio=new Audio(referenceBase+'tudum.mp3');introAudio.preload='auto';introAudio.volume=.7;
+let soundEnabled=true,entering=false;
+document.querySelector('#intro-mute').addEventListener('click',()=>{soundEnabled=!soundEnabled;introAudio.muted=!soundEnabled;document.querySelector('#intro-mute').textContent=soundEnabled?'Sound on ♫':'Sound off';document.querySelector('#intro-mute').setAttribute('aria-pressed',String(!soundEnabled));});
+enter.addEventListener('click',()=>{
+  if(entering)return;entering=true;
+  if(soundEnabled)introAudio.play().catch(()=>{});
+  intro.classList.add('entering');enter.disabled=true;
+  setTimeout(()=>{intro.hidden=true;profiles.showModal();},matchMedia('(prefers-reduced-motion: reduce)').matches?0:3000);
+});
+document.querySelector('#video-mute').addEventListener('click',()=>{heroVideo.muted=!heroVideo.muted;document.querySelector('#video-mute').textContent=heroVideo.muted?'Unmute ♫':'Mute ♫';document.querySelector('#video-mute').setAttribute('aria-pressed',String(!heroVideo.muted));});
+let previousProfile;try{previousProfile=sessionStorage.getItem('portfolio-profile');}catch{}
+setProfileMedia(avatarFiles[previousProfile]?previousProfile:'Recruiter');
+if(!previousProfile&&!location.hash){intro.hidden=false;enter.focus();}
+

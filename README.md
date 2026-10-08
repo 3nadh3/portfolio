@@ -15,4 +15,6 @@ Content lives in `portfolio/index.html`; project and skill data live in `portfol
 
 ## Design reference
 
-Inspired by [shamihsnn/netflix-portfolio](https://github.com/shamihsnn/netflix-portfolio): red-on-black branding, role-based profile selection, terminal styling, and browsable content rows. This implementation keeps the existing static deployment and uses Trinadh's own resume content. No reference repository source code or media assets are copied. Not affiliated with Netflix.
+Inspired by [shamihsnn/netflix-portfolio](https://github.com/shamihsnn/netflix-portfolio): red-on-black branding, role-based profile selection, terminal styling, and browsable content rows. This implementation keeps the existing static deployment and uses Trinadh's own resume content. The opening sound, profile avatars, and profile-specific background videos are loaded from the reference repository at pinned commit `6f691190bebcbcae9a16ec7bcf092201ff5eb71f`. These require network access to raw.githubusercontent.com. The opening sequence follows its click-to-enter transition. Not affiliated with Netflix.
+
+The opening sound plays only after Enter is clicked. Visitors can mute it before entering. Background videos start muted and have an explicit sound toggle. Reduced-motion settings skip the opening transition. Returning visitors skip the opening within the same tab session.
